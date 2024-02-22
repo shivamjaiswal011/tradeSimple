@@ -1,0 +1,71 @@
+<div class="positionSizing-container">
+    <div class="positionSizing-options">
+        <h1>Position Sizing Calculator</h1>
+        <div class="spacer"></div>
+        <!--Have any option for this page headings like buttons and all-->
+    </div>
+    <!-- Row 1: Stats Cards -->
+    <div class="sizingOption-row">
+
+        <div class="card">
+            <strong>Equity Model: </strong>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Select Equity Model</mat-label>
+                <mat-select placeholder="Equity Model" [(ngModel)]="equityModel">
+                    <mat-option value="Core Equity Model">Core Equity Model</mat-option>
+                    <mat-option value="Total Equity Model">Total Equity Model</mat-option>
+                    <mat-option value="Reduced Total Equity Model">Reduced Total Equity Model</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="card">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Select Position Sizing Model</mat-label>
+                <mat-select placeholder="Position Sizing Model" [(ngModel)]="positionSizingModel">
+                    <mat-option value="Percent Risk">Percent Risk</mat-option>
+                    <mat-option value="Percent Volatility">Percent Volatility</mat-option>
+                    <mat-option value="Market's Money">Market's Money</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="card">
+            <article>
+                <p>{{positionSizingModel}}: Sample Explaination for the Model Selected for position Sizing</p>
+            </article>
+        </div>
+    </div>
+
+    <!-- Row 2: Chart Cards -->
+    <div class="input-output-row">
+        <!-- Chart Card 1: Sales Chart -->
+        <div class="input-output-card">
+            <mat-form-field>
+                <mat-label>Total Equity</mat-label>
+                <input matInput type="text" [(ngModel)]="totalEquity" required placeholder="Total Equity"
+                    name="totalEquity">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Percent Risk</mat-label>
+                <input matInput type="text" [(ngModel)]="percentRisk" required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>1 R</mat-label>
+                <input matInput type="text" [(ngModel)]="oneR" required>
+            </mat-form-field>
+            <button mat-raised-button color="accent" (click)="onSubmit()" class="calButton">Calculate</button>
+        </div>
+
+        <!-- Chart Card 2: Revenue Chart -->
+        <div class="input-output-card">
+            <b>Shares To Buy</b>
+            <span>{{sharesToBuy}}</span>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,36 @@
+.appBody {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainBody {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+    overflow-y: auto;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.sidenav-container {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.sidenav {
+    height: 100%;
+    width: 15%;
+}
+
+.sidenavList {
+    margin: 1%;
+    padding: 1px;
+}

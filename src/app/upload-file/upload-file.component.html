@@ -1,0 +1,9 @@
+<div class="uploadFile">
+    <div>
+        <label class="file-label">
+            <mat-icon>add_circle</mat-icon>
+            <input type="file" accept=".CSV" (change)="onFileSelected($event)">
+        </label>
+    </div>
+    <button mat-raised-button (click)="uploadFile()" color="accent">Import</button>
+</div>

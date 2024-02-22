@@ -1,0 +1,61 @@
+<div class="journal-container">
+    <div class="journal-options">
+        <h1>Journal</h1>
+        <div class="spacer"></div>
+        <!--Have any option for this page headings like buttons and all-->
+        <div class="timeFrame">
+            <strong>Time Frame: </strong>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Select Time Frame</mat-label>
+                <mat-select placeholder="Equity Model" [(ngModel)]="timeFrame">
+                    <mat-option value="daily">daily</mat-option>
+                    <mat-option value="weekly">weekly</mat-option>
+                    <mat-option value="mothly">mothly</mat-option>
+                    <mat-option value="yearly">yearly</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="datepick">
+            <mat-form-field>
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" [value]="todayDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- Row 1: Stats Cards -->
+    <div class="stats-row">
+        <!-- Card 1: Total Sales -->
+        <div class="card">
+            <h2>Total Trades</h2>
+            <p>4</p>
+        </div>
+
+        <!-- Card 2: Revenue -->
+        <div class="card">
+            <h2>Profit/Loss</h2>
+            <p>$8,500</p>
+        </div>
+
+        <!-- Card 3: Expenses -->
+        <div class="card">
+            <h2>Brokrage</h2>
+            <p>$1,500</p>
+        </div>
+
+        <!-- Card 4: Profit -->
+        <div class="card">
+            <h2>Mistakes</h2>
+            <p>2</p>
+        </div>
+    </div>
+
+    <!-- Row 2: Chart Cards -->
+    <div class="order-row">
+        <div *ngFor="let item of items">
+            <app-order-card [title]="item.title" [description]="item.description"></app-order-card>
+        </div>
+    </div>
+</div>

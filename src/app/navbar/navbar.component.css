@@ -1,0 +1,15 @@
+.customMenu {
+    color: white;
+}
+
+.menuButton {
+    background-color: unset;
+    border: none;
+    margin-right: 2%;
+}
+
+.profileButton {
+    border: none;
+    background-color: unset;
+    color: white;
+}

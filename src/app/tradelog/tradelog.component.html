@@ -1,0 +1,43 @@
+<div class="tradelog-container">
+    <div class="tradelog-options">
+        <h1>Trade Logs</h1>
+        <div class="spacer"></div>
+        <!--Have any option for this page headings like buttons and all-->
+        <app-upload-file></app-upload-file>
+    </div>
+    <!-- Row 1: Stats Cards -->
+    <div class="stats-row">
+        <!-- Card 1: Total Sales -->
+        <div class="card">
+            <h2>Total Sales</h2>
+            <p>$10,000</p>
+        </div>
+
+        <!-- Card 2: Revenue -->
+        <div class="card">
+            <h2>Revenue</h2>
+            <p>$8,500</p>
+        </div>
+
+        <!-- Card 3: Expenses -->
+        <div class="card">
+            <h2>Expenses</h2>
+            <p>$1,500</p>
+        </div>
+
+        <!-- Card 4: Profit -->
+        <div class="card">
+            <h2>Profit</h2>
+            <p>$7,500</p>
+        </div>
+    </div>
+
+    <!-- Row 2: Chart Cards -->
+    <div class="grid-row">
+        <ag-grid-angular style="height: 100%; margin-top: 15px;" class="ag-theme-alpine" [rowData]="rowData"
+            [gridOptions]="tradelogGridOptions" [defaultColDef]="defaultColDef" [columnDefs]="colDefs"
+            [suppressRowClickSelection]="true" [sideBar]="false" [pagination]="false"
+            (gridReady)="onTradelogGridReady($event)">
+        </ag-grid-angular>
+    </div>
+</div>
