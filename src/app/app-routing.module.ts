@@ -4,9 +4,10 @@ import { PositionSizingComponent } from './position-sizing/position-sizing.compo
 import { HomeComponent } from './home/home.component';
 import { TradelogComponent } from './tradelog/tradelog.component';
 import { JournalComponent } from './journal/journal.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: DashboardComponent },
   { path: 'positionSizing', component: PositionSizingComponent },
   { path: 'tradelog', component: TradelogComponent },
   { path: 'journal', component: JournalComponent }

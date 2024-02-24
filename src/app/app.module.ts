@@ -14,20 +14,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
-import { UploadFileComponent } from './upload-file/upload-file.component';
+import { UploadFileComponent } from './shared/component/upload-file/upload-file.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalanderComponent } from './calander/calander.component';
+import { CalanderComponent } from './dashboard/calander/calander.component';
 import { TradelogComponent } from './tradelog/tradelog.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { JournalComponent } from './journal/journal.component';
-import { OrderCardComponent } from './order-card/order-card.component';
+import { OrderCardComponent } from './shared/component/order-card/order-card.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { IndividualTradeComponent } from './individual-trade/individual-trade.component';
 
 
 
@@ -41,7 +43,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     CalanderComponent,
     TradelogComponent,
     JournalComponent,
-    OrderCardComponent
+    OrderCardComponent,
+    DashboardComponent,
+    IndividualTradeComponent
   ],
   imports: [
     BrowserModule,
