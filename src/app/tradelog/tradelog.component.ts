@@ -21,18 +21,33 @@ export class TradelogComponent implements OnInit {
 
   colDefs: ColDef[] = [
     {
-      headerName: "ID",
-      field: "id",
+      headerName: "Symbol",
+      field: "symbol",
       width: 300
     },
     {
-      headerName: "Name",
-      field: "name",
+      headerName: "Quantity",
+      field: "quantity",
       width: 300
     },
     {
-      headerName: "Age",
-      field: "age",
+      headerName: "Buy Price",
+      field: "avg_buy_price",
+      width: 300
+    },
+    {
+      headerName: "Sell Price",
+      field: "avg_sell_price",
+      width: 300
+    },
+    {
+      headerName: "Profit/Loss",
+      field: "net_profit",
+      width: 300
+    },
+    {
+      headerName: "R-Multiple",
+      field: "r_multiple",
       width: 300
     }
   ];
@@ -46,7 +61,10 @@ export class TradelogComponent implements OnInit {
 
     // Define dummy data
     for (let index = 0; index < 100; index++) {
-      this.rowData.push({ id: index, name: 'John' + index, age: 25 + index })
+      this.rowData.push({
+        symbol: 'Relience', quantity: 30 + index + Math.random(), avg_buy_price: 25 + index + Math.random(),
+        avg_sell_price: 15 + index + Math.random(), net_profit: Math.random(), r_multiple: 0.0 + Math.random()
+      });
 
     }
   }
