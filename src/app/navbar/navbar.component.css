@@ -1,15 +1,49 @@
-.customMenu {
-    color: white;
+#navbar {
+    height: inherit;
+    margin: 0;
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.menuButton {
-    background-color: unset;
-    border: none;
-    margin-right: 2%;
+mat-toolbar {
+
+    height: 60px;
+    padding: 0;
+    background-color: var(--background-color);
 }
 
-.profileButton {
-    border: none;
-    background-color: unset;
+.mat-toolbar-row {
     color: white;
+    height: inherit;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.mat-form-field-wrapper {
+    display: flex;
+    /* Ensure proper alignment of inputs and suffix */
+}
+
+.mat-icon-button {
+    color: var(--primary-color);
+    /* Customize icon color */
+}
+
+.dateRange {
+    display: flex;
+    height: inherit;
+}
+
+.account-selector {
+    display: flex;
+    height: inherit;
+}
+
+mat-datepicker-toggle {
+    color: white;
+    display: inline;
 }

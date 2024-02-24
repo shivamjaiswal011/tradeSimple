@@ -26,3 +26,26 @@ strong {
 .spacer {
     flex: 1 1 auto;
 }
+
+.gradient-text {
+    background: linear-gradient(90deg, #35AE9A 25.41%, rgba(0, 135, 169, 0.6) 103.95%);
+    /* Define your gradient colors */
+    -webkit-background-clip: text;
+    /* Apply text clipping for WebKit browsers */
+    background-clip: text;
+    /* Apply text clipping for other browsers */
+    color: transparent;
+    /* Make the text transparent */
+}
+
+mat-divider {
+    background-color: rgba(0, 0, 0, .12);
+}
+
+:root {
+    --primary-color: #35AE9A;
+    --background-color: #030303;
+    --secondary-color: #EEC759;
+    --secondary-background-color: rgba(255, 255, 255, .1);
+    --light-font: #7a7979;
+}

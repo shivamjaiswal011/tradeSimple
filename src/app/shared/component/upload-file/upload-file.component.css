@@ -1,33 +1,8 @@
-/* Styling for file input label */
-.file-label {
-    display: inline-block;
-    margin-top: 30%;
+.upload {
+    color: white;
+    background: #35AE9A;
 }
 
-/* Hide the default file input button */
-.file-label input[type="file"] {
-    display: none;
-}
-
-/* Style the label to mimic a button */
-.file-label span {
-    display: inline-block;
-    padding: 8px 12px;
-    /* Example background color */
-    color: #fff;
-    /* Example text color */
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Hover effect for the label */
-.file-label:hover span {
-    background-color: #303f9f;
-    /* Example hover background color */
-}
-
-.uploadFile {
-    display: flex;
-    flex-direction: row;
-
+mat-icon {
+    margin: 0% 5% 5% 0%;
 }

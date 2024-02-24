@@ -1,32 +1,48 @@
 <div class="appBody">
-  <div class="navbar">
-    <app-navbar (toggleSidenavEvent)="toggleSidenav()"></app-navbar>
-  </div>
   <div class="mainBody">
-    <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #sidenav="matSidenav" mode="side" class="sidenav" role="navigation" opened>
-        <div class="sidenavList">
-          <mat-nav-list>
-            <mat-list-item>
-              <a routerLink="/">Dashboard</a>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item>
-              <a routerLink="/tradelog">Trade Log</a>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item>
-              <a routerLink="/journal">Journal</a>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item>
-              <a routerLink="/positionSizing">Position sizing</a>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-          </mat-nav-list>
-        </div>
+    <mat-sidenav-container class="sidenav-container" autosize>
+      <mat-sidenav #sidenav="matSidenav" mode="side" role="navigation" opened="isSidenavOpen">
+        <mat-nav-list>
+
+          <mat-list-item (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon class="toggle-button" [ngClass]="{ rotated: isSidenavOpen }">chevron_right</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="''" class="menu-item" (click)="updateTitle('Dashboard')">
+            <mat-icon mat-list-icon style="color: #EEC759;">dashboard</mat-icon>
+            <span *ngIf="isSidenavOpen"><b>Dashboard</b></span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item [routerLink]="'tradelog'" class="menu-item" (click)="updateTitle('Trade Log')">
+            <mat-icon mat-list-icon style="color: #BEADFA;">assessment</mat-icon>
+            <span *ngIf="isSidenavOpen"><b>Trade Log</b></span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item [routerLink]="'journal'" class="menu-item" (click)="updateTitle('Journal')">
+            <mat-icon mat-list-icon style="color: #FF9B9B;">book</mat-icon>
+            <span *ngIf="isSidenavOpen"><b>Journal</b></span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item [routerLink]="'positionSizing'" class="menu-item" (click)="updateTitle('Position Sizing')">
+            <mat-icon mat-list-icon style="color: #CAF7E3;">compare</mat-icon>
+            <span *ngIf="isSidenavOpen"><b>Position sizing</b></span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+        </mat-nav-list>
       </mat-sidenav>
+      <mat-divider [vertical]="true"></mat-divider>
       <mat-sidenav-content role="region">
+        <div class="navbar">
+          <app-navbar [title]="title"></app-navbar>
+        </div>
         <div class="content">
           <router-outlet></router-outlet>
         </div>

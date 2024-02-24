@@ -16,9 +16,6 @@ export class UploadFileComponent implements OnInit {
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
-  }
-
-  uploadFile(): void {
     if (!this.selectedFile) {
       console.error('No file selected.');
       return;

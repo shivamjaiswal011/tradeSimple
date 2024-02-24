@@ -7,9 +7,13 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  toggleSidenav() {
-    this.sidenav.toggle();
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  isSidenavOpen: boolean = true;
+  title: string = 'Dashboard';
+
+  updateTitle(newTitle: string) {
+    this.title = newTitle;
   }
+
 }

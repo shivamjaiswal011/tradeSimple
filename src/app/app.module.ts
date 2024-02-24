@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PositionSizingComponent } from './position-sizing/position-sizing.component';
 import { HomeComponent } from './home/home.component';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { UploadFileComponent } from './shared/component/upload-file/upload-file.component';
@@ -30,8 +30,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndividualTradeComponent } from './individual-trade/individual-trade.component';
-
-
 
 @NgModule({
   declarations: [
@@ -66,7 +64,8 @@ import { IndividualTradeComponent } from './individual-trade/individual-trade.co
     FullCalendarModule,
     AgGridModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

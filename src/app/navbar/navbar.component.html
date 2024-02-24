@@ -1,10 +1,29 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button (click)="toggleSidenav()" class="menuButton">
-        <mat-icon class="customMenu">menu</mat-icon>
-    </button>
-    <span>Trade Simple</span>
-    <div class="spacer"></div>
-    <button mat-icon-button class="profileButton">
-        <mat-icon>account_circle</mat-icon>
-    </button>
-</mat-toolbar>
+<div id="navbar">
+    <mat-toolbar>
+        <div class="mat-toolbar-row">
+            <h2>{{title}}</h2>
+            <div class="spacer"></div>
+            <div class="dateRange">
+                <mat-form-field appearance="outline">
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Start date" [(ngModel)]="startDate"
+                            (change)="onDateChange($event)">
+                        <input matEndDate placeholder="End date" [(ngModel)]="endDate" (change)="onDateChange($event)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+            <div class="account-selector">
+                <mat-form-field appearance="outline" color="var(--primary-color)">
+                    <mat-label style="color: var(--light-font);">Select Account</mat-label>
+                    <mat-select placeholder="Account" [(ngModel)]="selectedAccounts" multiple="true"
+                        (valueChange)="functionAccountChange($event)">
+                        <mat-option *ngFor="let account of accountList" [value]="account.id">{{ account.name
+                            }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-toolbar>
+</div>
