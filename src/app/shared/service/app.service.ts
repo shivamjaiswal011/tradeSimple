@@ -12,6 +12,7 @@ export class AppService {
     constructor(private http: HttpClient, private sharedService: SharedService) { }
 
     uploadCsv(data: FormData) {
+        console.log(data);
         this.http.post<any>(`${this.appServiceBaseURL}/tradebooks/upload`, data)
             .subscribe({
                 next: response => {

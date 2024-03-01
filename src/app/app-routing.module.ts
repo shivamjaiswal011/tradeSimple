@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PositionSizingComponent } from './position-sizing/position-sizing.component';
-import { HomeComponent } from './home/home.component';
 import { TradelogComponent } from './tradelog/tradelog.component';
 import { JournalComponent } from './journal/journal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'positionSizing', component: PositionSizingComponent },
-  { path: 'tradelog', component: TradelogComponent },
-  { path: 'journal', component: JournalComponent }
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'positionSizing', component: PositionSizingComponent, canActivate: [AuthGuard] },
+  { path: 'tradelog', component: TradelogComponent, canActivate: [AuthGuard] },
+  { path: 'journal', component: JournalComponent, canActivate: [AuthGuard] },
+  { path: 'authentication', component: AuthenticationComponent }
 ];
 
 @NgModule({

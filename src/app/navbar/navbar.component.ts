@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AppService } from '../shared/service/app.service';
 import { FormControl } from '@angular/forms';
-import { DateRange, IgxDateRangePickerComponent, OverlaySettings } from 'igniteui-angular';
+import { AuthService } from '../shared/service/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +16,7 @@ export class NavbarComponent implements OnInit {
   startDate: Date | null = null;
   endDate: Date | null = null;
 
-  constructor(private apiService: AppService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -35,6 +34,11 @@ export class NavbarComponent implements OnInit {
 
   onDateChange(event: any) {
     console.log(event);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.authService.logout();
   }
 
 

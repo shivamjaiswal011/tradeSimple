@@ -22,7 +22,7 @@ export class UploadFileComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('file', this.selectedFile);
+    formData.append('csv', this.selectedFile);
     formData.append('email', 'shivamjaiswal82@gmail.com');
     this.appService.uploadCsv(formData);
   }

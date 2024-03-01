@@ -30,6 +30,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndividualTradeComponent } from './individual-trade/individual-trade.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './shared/service/auth.service';
+import { AppService } from './shared/service/app.service';
+import { SignupComponent } from './signup/signup.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -43,7 +49,10 @@ import { IndividualTradeComponent } from './individual-trade/individual-trade.co
     JournalComponent,
     OrderCardComponent,
     DashboardComponent,
-    IndividualTradeComponent
+    IndividualTradeComponent,
+    LoginComponent,
+    SignupComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule,
@@ -66,8 +75,9 @@ import { IndividualTradeComponent } from './individual-trade/individual-trade.co
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatTabsModule
   ],
-  providers: [],
+  providers: [AuthService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

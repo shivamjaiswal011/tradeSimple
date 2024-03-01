@@ -1,6 +1,6 @@
 <div class="appBody">
   <div class="mainBody">
-    <mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav-container class="sidenav-container" autosize *ngIf="isAuthenticated">
       <mat-sidenav #sidenav="matSidenav" mode="side" role="navigation" opened="isSidenavOpen">
         <mat-nav-list>
 
@@ -38,7 +38,6 @@
 
         </mat-nav-list>
       </mat-sidenav>
-      <mat-divider [vertical]="true"></mat-divider>
       <mat-sidenav-content role="region">
         <div class="navbar">
           <app-navbar [title]="title"></app-navbar>
@@ -48,5 +47,9 @@
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
+    <div class="unAuth" *ngIf="!isAuthenticated">
+      <app-navbar [title]="title"></app-navbar>
+      <app-authentication></app-authentication>
+    </div>
   </div>
 </div>
