@@ -1,6 +1,9 @@
+import { Account } from './../shared/interfaces/account';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../shared/service/auth.service';
+import { AppService } from '../shared/service/app.service';
+import { SelectedAccountService } from '../shared/service/selected-account-service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,26 +13,38 @@ import { AuthService } from '../shared/service/auth.service';
 export class NavbarComponent implements OnInit {
   @Input() title: string = '';
   isSidenavOpen: boolean = true;
-  selectedAccounts: any;
-  accountList: any = [];
+  selectedAccount: any;
+  accountList: Account[] = [];
   accountForm = new FormControl('');
   startDate: Date | null = null;
   endDate: Date | null = null;
+  userId: string | null = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private appService: AppService, private selectedAccountService: SelectedAccountService) { }
 
   ngOnInit(): void {
 
     //subscribe to apiService.getAccount()
-    this.accountList.push({ id: 1, name: 'shivam' });
-    this.accountList.push({ id: 2, name: 'Priyanka' });
-    this.accountList.push({ id: 3, name: 'Shubham' });
+    this.userId = this.authService.getUserId();
+    this.appService.getAccountName(this.userId).subscribe({
+      next: response => {
+        if (response.Account) {
+          response.Account.forEach((element: any) => {
+            this.accountList.push({ accountID: element.account_id, accountName: element.account_name })
+          });
+        }
+      },
+      error: err => {
+        console.log("error", err)
+      }
+    });
+
   }
 
   functionAccountChange(event: any) {
-    console.log(event);
-    console.log(this.startDate);
-    console.log(this.endDate);
+    console.log(this.selectedAccount, event);
+    this.selectedAccount = event;
+    this.selectedAccountService.setSelectedAccount(this.selectedAccount);
   }
 
   onDateChange(event: any) {

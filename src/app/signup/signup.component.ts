@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit {
     this.userInfo.name = this.name;
     this.userInfo.email = this.email;
     this.userInfo.password = this.password;
-    this.userInfo.phone_number = this.phoneNumber;
+    this.userInfo.phoneNumber = this.phoneNumber;
     this.authService.signup(this.userInfo).subscribe({
       next: response => {
         // Successful login

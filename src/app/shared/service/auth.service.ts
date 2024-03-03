@@ -14,6 +14,7 @@ export class AuthService {
     private authServiceBaseURL = this.sharedService.getBaseUrl();
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+    private userIdKey = 'userId';
 
     constructor(private http: HttpClient, private sharedService: SharedService, private router: Router) { }
 
@@ -43,6 +44,14 @@ export class AuthService {
     }
 
     isAuthenticated(): boolean {
+        if (localStorage.getItem('token') && localStorage.getItem(this.userIdKey)) {
+            this.isAuthenticatedSubject.next(true)
+        }
         return this.isAuthenticatedSubject.value;
     }
+
+    getUserId(): string | null {
+        return localStorage.getItem(this.userIdKey);
+    }
+
 }

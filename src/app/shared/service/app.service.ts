@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from './shared.service';
 import { Injectable } from "@angular/core";
@@ -11,19 +12,12 @@ export class AppService {
 
     constructor(private http: HttpClient, private sharedService: SharedService) { }
 
-    uploadCsv(data: FormData) {
-        console.log(data);
-        this.http.post<any>(`${this.appServiceBaseURL}/tradebooks/upload`, data)
-            .subscribe({
-                next: response => {
-                    console.log('File uploaded successfully:', response);
-                    // Handle response from backend as needed
-                },
-                error: error => {
-                    console.error('Error uploading file:', error);
-                    // Handle error
-                }
-            });
+    uploadCsv(params: FormData): Observable<any> {
+        return this.http.post<any>(`${this.appServiceBaseURL}/tradebooks/upload`, params)
+    }
 
+    getAccountName(userId: string | null): Observable<any> {
+        const url = userId ? `${this.appServiceBaseURL}/accounts/${userId}` : `${this.appServiceBaseURL}/accounts`;
+        return this.http.get<any>(url);
     }
 }

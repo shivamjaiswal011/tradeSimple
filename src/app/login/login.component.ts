@@ -2,6 +2,7 @@ import { LoginRequest } from './../shared/interfaces/login-request';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/service/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../shared/interfaces/user-info';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   errorMessage: string = '';
   LoginRequest: LoginRequest = new LoginRequest();
+  userInfo: User = new User();
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -22,13 +24,11 @@ export class LoginComponent implements OnInit {
     this.LoginRequest.password = this.password;
     this.authService.login(this.LoginRequest).subscribe({
       next: response => {
-        // Successful login
-        // Redirect to home page or navigate to a protected route
-        console.log('login successfully:', response);
         this.authService.handleLoginResponse(response);
-        localStorage.setItem('token', response.token); // Store token in local storage
-        this.router.navigate(['/']); // Navigate to homeHow can I use my customtooltip Bo , 
-
+        this.userInfo.userId = response.userInfo.user_id;
+        localStorage.setItem('userId', this.userInfo.userId);
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/']); // Navigate to home
       },
       error: error => {
         console.error('Invalid username or password', error);

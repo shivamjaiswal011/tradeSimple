@@ -4,7 +4,7 @@ export class SignupRequest implements SignupRequest {
         this.name = '';
         this.email = '';
         this.password = '';
-        this.phone_number = '';
+        this.phoneNumber = '';
     }
 }
 
@@ -12,5 +12,5 @@ export interface SignupRequest {
     name: string;
     email: string;
     password: string;
-    phone_number: string;
+    phoneNumber: string;
 }
