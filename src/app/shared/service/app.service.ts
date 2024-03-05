@@ -13,7 +13,7 @@ export class AppService {
     constructor(private http: HttpClient, private sharedService: SharedService) { }
 
     uploadCsv(params: FormData): Observable<any> {
-        return this.http.post<any>(`${this.appServiceBaseURL}/tradebooks/upload`, params)
+        return this.http.post<any>(`${this.appServiceBaseURL}/transactions/upload`, params)
     }
 
     getAccountName(userId: string | null): Observable<any> {
