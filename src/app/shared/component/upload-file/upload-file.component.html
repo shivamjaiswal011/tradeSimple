@@ -1,4 +1,10 @@
-<div class="import-button-container">
-    <input type="file" accept=".csv" (change)="onFileSelected($event)" style="display: none;" #fileInput>
-    <button mat-raised-button class="upload" (click)="fileInput.click()"><mat-icon>add_circle</mat-icon>Import</button>
+<div class="upload-file">
+    <div class="file-import-date" *ngIf="accountID!=''">
+        <b>Last Import From:-{{lastImportFromDate}} To:-{{lastImportToDate}}</b>
+    </div>
+    <div class="import-button-container">
+        <input type="file" accept=".csv" (change)="onFileSelected($event)" style="display: none;" #fileInput>
+        <button mat-raised-button class="upload"
+            (click)="fileInput.click()"><mat-icon>add_circle</mat-icon>Import</button>
+    </div>
 </div>

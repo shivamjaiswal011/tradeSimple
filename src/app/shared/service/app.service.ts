@@ -20,4 +20,14 @@ export class AppService {
         const url = userId ? `${this.appServiceBaseURL}/accounts/${userId}` : `${this.appServiceBaseURL}/accounts`;
         return this.http.get<any>(url);
     }
+
+    getAllOpenTrades(accountID: string | null): Observable<any> {
+        const url = accountID ? `${this.appServiceBaseURL}/trades/open/${accountID}` : `${this.appServiceBaseURL}/trades/open`;
+        return this.http.get<any>(url);
+    }
+
+    getAllClosedTrades(accountID: string | null): Observable<any> {
+        const url = accountID ? `${this.appServiceBaseURL}/trades/closed/${accountID}` : `${this.appServiceBaseURL}/trades/closed`;
+        return this.http.get<any>(url);
+    }
 }

@@ -6,3 +6,15 @@
 mat-icon {
     margin: 0% 5% 5% 0%;
 }
+
+.file-import-date {
+    color: white;
+    margin: 1%;
+    position: relative;
+}
+
+.upload-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

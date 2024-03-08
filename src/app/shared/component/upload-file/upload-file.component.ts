@@ -10,16 +10,22 @@ import { SelectedAccountService } from '../../service/selected-account-service';
 })
 export class UploadFileComponent implements OnInit {
   selectedFile: File | null = null;
-  userId: string | null = null;
-  accountId: string = '';
+  userID: string | null = null;
+  accountID: string = '';
+  lastImportFromDate: string = '';
+  lastImportToDate: string = '';
+
   constructor(private appService: AppService, private authService: AuthService, private selectedAccountService: SelectedAccountService) { }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.userID = this.authService.getUserId();
     this.selectedAccountService.getSelectedAccount().subscribe({
       next: response => {
-        if (response != null)
-          this.accountId = response;
+        if (response != null) {
+          this.accountID = response.accountID;
+          this.lastImportFromDate = response.lastImportFromDate
+          this.lastImportToDate = response.lastImportToDate
+        }
         else
           console.log("No Account is Selected");
       },
@@ -37,20 +43,18 @@ export class UploadFileComponent implements OnInit {
     }
 
     // Ensure userId and accountId are not null
-    if (this.userId && this.accountId) {
+    if (this.userID && this.accountID) {
       const formData = new FormData();
       formData.append('csv', this.selectedFile);
-      formData.append('user_id', this.userId);
-      formData.append('account_id', this.accountId);
+      formData.append('user_id', this.userID);
+      formData.append('account_id', this.accountID);
 
       this.appService.uploadCsv(formData).subscribe({
         next: response => {
           console.log('File uploaded successfully:', response);
-          // Handle response from backend as needed
         },
         error: error => {
           console.error('Error uploading file:', error);
-          // Handle error
         }
       });
     } else {

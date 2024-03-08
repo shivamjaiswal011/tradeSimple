@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
 import { ColDef, GridOptions } from 'ag-grid-community';
+import { SelectedAccountService } from '../shared/service/selected-account-service';
+import { AppService } from '../shared/service/app.service';
 
 @Component({
   selector: 'app-tradelog',
@@ -9,7 +11,10 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 })
 export class TradelogComponent implements OnInit {
   tradelogGridParam: any;
-  rowData: any = [];
+  ClosedTradeRowData: any = [];
+  openTradeRowData: any = [];
+  accountID: string = '';
+
   public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 100,
@@ -21,8 +26,8 @@ export class TradelogComponent implements OnInit {
 
   colDefs: ColDef[] = [
     {
-      headerName: "Symbol",
-      field: "symbol",
+      headerName: "ISIN",
+      field: "isin",
       width: 300
     },
     {
@@ -49,24 +54,62 @@ export class TradelogComponent implements OnInit {
       headerName: "R-Multiple",
       field: "r_multiple",
       width: 300
-    }
+    },
+    {
+      headerName: "Opened Time",
+      field: "open_timestamp",
+      width: 300
+    },
+    {
+      headerName: "Closed Time",
+      field: "close_timestamp",
+      width: 300
+    },
+    {
+      headerName: "Position",
+      field: "position",
+      width: 300
+    },
+    {
+      headerName: "Rating",
+      field: "rating",
+      width: 300
+    },
   ];
   tradelogGridApi: any;
   tradelogGridColumnApi: any;
   tradelogGridOptions: GridOptions<any> | undefined;
 
-  constructor() { }
+  constructor(private selectedAccountService: SelectedAccountService, private appService: AppService) { }
 
   ngOnInit(): void {
 
-    // Define dummy data
-    for (let index = 0; index < 100; index++) {
-      this.rowData.push({
-        symbol: 'Relience', quantity: 30 + index + Math.random(), avg_buy_price: 25 + index + Math.random(),
-        avg_sell_price: 15 + index + Math.random(), net_profit: Math.random(), r_multiple: 0.0 + Math.random()
-      });
+    this.selectedAccountService.getSelectedAccount().subscribe({
+      next: response => {
+        if (response != null) {
+          this.accountID = response.accountID;
+          this.getOpenTradesOnAccountChange();
+        }
+      },
+      error: error => {
+        console.log("Error fetching selected account:", error);
+      }
+    });
+  }
 
-    }
+  getOpenTradesOnAccountChange() {
+    this.appService.getAllClosedTrades(this.accountID).subscribe({
+      next: response => {
+        if (response.data) {
+          this.ClosedTradeRowData = response.data;
+          console.log(response);
+        }
+
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
   }
 
   onTradelogGridReady(params: any) {

@@ -13,37 +13,34 @@ import { SelectedAccountService } from '../shared/service/selected-account-servi
 export class NavbarComponent implements OnInit {
   @Input() title: string = '';
   isSidenavOpen: boolean = true;
-  selectedAccount: any;
+  selectedAccountID: any;
+  selectedAccount: Account = new Account();
   accountList: Account[] = [];
-  accountForm = new FormControl('');
   startDate: Date | null = null;
   endDate: Date | null = null;
-  userId: string | null = null;
+
 
   constructor(private authService: AuthService, private appService: AppService, private selectedAccountService: SelectedAccountService) { }
 
   ngOnInit(): void {
-
-    //subscribe to apiService.getAccount()
-    this.userId = this.authService.getUserId();
-    this.appService.getAccountName(this.userId).subscribe({
+    this.selectedAccountService.getSelectedAccountDetails().subscribe({
       next: response => {
-        if (response.Account) {
-          response.Account.forEach((element: any) => {
-            this.accountList.push({ accountID: element.account_id, accountName: element.account_name })
-          });
-        }
+        this.accountList = response;
       },
-      error: err => {
-        console.log("error", err)
+      error: error => {
+        console.log(error);
       }
-    });
+    })
 
   }
 
   functionAccountChange(event: any) {
-    console.log(this.selectedAccount, event);
-    this.selectedAccount = event;
+    this.selectedAccountID = event;
+    this.accountList.forEach((account: Account) => {
+      if (account.accountID == this.selectedAccountID) {
+        this.selectedAccount = account;
+      }
+    })
     this.selectedAccountService.setSelectedAccount(this.selectedAccount);
   }
 
@@ -55,6 +52,4 @@ export class NavbarComponent implements OnInit {
     localStorage.clear();
     this.authService.logout();
   }
-
-
 }

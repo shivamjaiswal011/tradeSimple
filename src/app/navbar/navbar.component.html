@@ -17,7 +17,7 @@
             <div class="account-selector">
                 <mat-form-field appearance="outline" color="var(--primary-color)">
                     <mat-label style="color: var(--light-font);">Select Account</mat-label>
-                    <mat-select placeholder="Account" [(ngModel)]="selectedAccount" multiple="false"
+                    <mat-select placeholder="Account" [(ngModel)]="selectedAccountID" multiple="false"
                         (valueChange)="functionAccountChange($event)">
                         <mat-option *ngFor="let account of accountList" [value]="account.accountID">{{
                             account.accountName

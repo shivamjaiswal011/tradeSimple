@@ -34,7 +34,7 @@
 
     <!-- Row 2: Chart Cards -->
     <div class="grid-row">
-        <ag-grid-angular style="height: 100%; margin-top: 15px;" class="ag-theme-alpine" [rowData]="rowData"
+        <ag-grid-angular style="height: 100%; margin-top: 15px;" class="ag-theme-alpine" [rowData]="ClosedTradeRowData"
             [gridOptions]="tradelogGridOptions" [defaultColDef]="defaultColDef" [columnDefs]="colDefs"
             [suppressRowClickSelection]="true" [sideBar]="false" [pagination]="false"
             (gridReady)="onTradelogGridReady($event)">
