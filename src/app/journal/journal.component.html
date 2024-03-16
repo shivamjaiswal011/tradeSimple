@@ -55,7 +55,7 @@
     <!-- Row 2: Chart Cards -->
     <div class="order-row">
         <div *ngFor="let item of items">
-            <app-order-card [title]="item.title" [description]="item.description"></app-order-card>
+            <app-order-card [transaction]="item.title"></app-order-card>
         </div>
     </div>
 </div>

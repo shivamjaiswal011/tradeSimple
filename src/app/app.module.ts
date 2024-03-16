@@ -30,10 +30,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IndividualTradeComponent } from './individual-trade/individual-trade.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './authentication/login/login.component';
 import { AuthService } from './shared/service/auth.service';
 import { AppService } from './shared/service/app.service';
-import { SignupComponent } from './signup/signup.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { MatTabsModule } from '@angular/material/tabs';
 

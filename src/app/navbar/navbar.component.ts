@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, private appService: AppService, private selectedAccountService: SelectedAccountService) { }
 
   ngOnInit(): void {
+
     this.selectedAccountService.getSelectedAccountDetails().subscribe({
       next: response => {
         this.accountList = response;
@@ -30,12 +31,13 @@ export class NavbarComponent implements OnInit {
       error: error => {
         console.log(error);
       }
-    })
+    });
 
   }
 
   functionAccountChange(event: any) {
     this.selectedAccountID = event;
+    localStorage.setItem('accountId', this.selectedAccountID);
     this.accountList.forEach((account: Account) => {
       if (account.accountID == this.selectedAccountID) {
         this.selectedAccount = account;

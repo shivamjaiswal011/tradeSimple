@@ -1,10 +1,36 @@
 <!-- card.component.html -->
 <div class="card">
-    <div class="card-header" (click)="toggleExpand()">
-        <h2>{{ title }}</h2>
-        <button>{{ isExpanded ? 'Collapse' : 'Expand' }}</button>
+    <div class="metric-card">
+        <div class="divider"></div>
+        <div class="metric-row">
+            <span>
+                <p>Type: {{transaction.trade_type}}</p>
+            </span>
+        </div>
+        <div class="metric-row">
+            <span>
+                <p>Executed on: {{transaction.execution_timestamp_stamp}}</p>
+            </span>
+        </div>
+        <div class="metric-row">
+            <span>
+                <p>Quantity: {{transaction.trade_quantity}}</p>
+            </span>
+        </div>
+        <div class="metric-row">
+            <span>
+                <p>Price: {{transaction.trade_price}}</p>
+            </span>
+        </div>
+        <div class="metric-row">
+            <span>
+                <p>Brokrage: {{transaction.brokrage}}</p>
+            </span>
+        </div>
     </div>
-    <div class="card-content" *ngIf="isExpanded">
-        <p>{{ description }}</p>
+    <div class="card-content">
+        <div *ngFor="let tradeImg of transaction.attachments" class="trade-img">
+            <img *ngIf="tradeImg" [src]="tradeImg" alt="Image">
+        </div>
     </div>
 </div>

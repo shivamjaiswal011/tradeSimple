@@ -1,8 +1,8 @@
-import { LoginRequest } from './../shared/interfaces/login-request';
+import { LoginRequest } from '../../shared/interfaces/login-request';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../shared/service/auth.service';
+import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../shared/interfaces/user-info';
+import { User } from '../../shared/interfaces/user-info';
 
 @Component({
   selector: 'app-login',

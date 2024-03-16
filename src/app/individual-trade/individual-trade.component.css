@@ -1,0 +1,49 @@
+.individual-container {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 2%;
+    overflow: auto;
+}
+
+.metric-card {
+    flex: 1;
+    background: rgba(25, 28, 31, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    color: white;
+    gap: 20px;
+    margin-right: 2%;
+}
+
+.trade-metrics {
+    display: flex;
+    width: 30%;
+    height: 100%;
+}
+
+.execution-details {
+    display: flex;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    background: rgba(25, 28, 31, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.trade-details {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.metric-row span {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}

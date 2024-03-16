@@ -30,4 +30,8 @@ export class AppService {
         const url = accountID ? `${this.appServiceBaseURL}/trades/closed/${accountID}` : `${this.appServiceBaseURL}/trades/closed`;
         return this.http.get<any>(url);
     }
+
+    getAllTransactionForThisTrade(tradeId: string, tradeType: string): Observable<any> {
+        return this.http.get<any>(`${this.appServiceBaseURL}/transactions?tradeId=${tradeId}&tradeType=${tradeType}`)
+    }
 }

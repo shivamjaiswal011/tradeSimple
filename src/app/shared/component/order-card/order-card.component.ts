@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Transaction } from '../../interfaces/transaction';
 
 @Component({
   selector: 'app-order-card',
@@ -11,9 +12,9 @@ export class OrderCardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  @Input() title: any;
-  @Input() description: any;
+  @Input() transaction: Transaction = new Transaction();
   isExpanded: boolean = false;
+
 
   toggleExpand() {
     this.isExpanded = !this.isExpanded;

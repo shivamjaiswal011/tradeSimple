@@ -12,6 +12,22 @@
     align-items: center;
 }
 
-.card-content {
+.metric-card {
     margin-top: 10px;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.trade-img {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.metric-row {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    position: relative;
 }

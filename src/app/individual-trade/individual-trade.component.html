@@ -1,1 +1,59 @@
-<p>individual-trade works!</p>
+<div class="individual-container">
+    <div class="trade-metrics">
+        <div class="metric-card">
+            <h1>
+                <b>{{trade.symbol}}</b>
+            </h1>
+            <div class="divider"></div>
+            <div class="metric-row">
+                <span>
+                    <h2>Avg Buy Price</h2>
+                    <h2><b>{{trade.avg_buy_price}}</b></h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Avg Sell Price</h2>
+                    <h2><b>{{trade.avg_sell_price}}</b></h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Net Profit</h2>
+                    <h2><b>{{netProfit}}</b></h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Quantity</h2>
+                    <h2>{{trade.quantity}}</h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>1 R</h2>
+                    <h2>{{trade.one_r}}</h2>
+                </span>
+
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>R-Multiple</h2>
+                    <h2>{{rMultiple}}</h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Position</h2>
+                    <h2>{{trade.position}}</h2>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="execution-details">
+        <div *ngFor="let transation of transactions" class="trade-details">
+            <app-order-card [transaction]="transation"></app-order-card>
+        </div>
+    </div>
+
+</div>
