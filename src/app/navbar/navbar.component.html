@@ -1,31 +1,28 @@
-<div id="navbar">
-    <mat-toolbar>
-        <div class="mat-toolbar-row">
-            <h2>{{title}}</h2>
-            <div class="spacer"></div>
-            <div class="dateRange">
-                <mat-form-field appearance="outline">
-                    <mat-date-range-input [rangePicker]="picker">
-                        <input matStartDate placeholder="Start date" [(ngModel)]="startDate"
-                            (change)="onDateChange($event)">
-                        <input matEndDate placeholder="End date" [(ngModel)]="endDate" (change)="onDateChange($event)">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                </mat-form-field>
-            </div>
-            <div class="account-selector">
-                <mat-form-field appearance="outline" color="var(--primary-color)">
-                    <mat-label style="color: var(--light-font);">Select Account</mat-label>
-                    <mat-select placeholder="Account" [(ngModel)]="selectedAccountID" multiple="false"
-                        (valueChange)="functionAccountChange($event)">
-                        <mat-option *ngFor="let account of accountList" [value]="account.accountID">{{
-                            account.accountName
-                            }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <button mat-button (click)="logout()"><mat-icon>power_settings_new</mat-icon></button>
-        </div>
-    </mat-toolbar>
-</div>
+<mat-toolbar>
+    <div class="header">
+        <h2>{{title}}</h2>
+    </div>
+    <div class="spacer"></div>
+    <div class="dateRange">
+        <mat-form-field appearance="outline">
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" [(ngModel)]="startDate" (change)="onDateChange($event)">
+                <input matEndDate placeholder="End date" [(ngModel)]="endDate" (change)="onDateChange($event)">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+    <div class="account-selector">
+        <mat-form-field appearance="outline" color="var(--primary-color)">
+            <mat-label style="color: var(--light-font);">Select Account</mat-label>
+            <mat-select placeholder="Account" [(ngModel)]="selectedAccountID" multiple="false"
+                (valueChange)="functionAccountChange($event)">
+                <mat-option *ngFor="let account of accountList" [value]="account.accountID">{{
+                    account.accountName
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <button mat-button (click)="logout()"><mat-icon>exit_to_app</mat-icon></button>
+</mat-toolbar>

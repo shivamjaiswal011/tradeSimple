@@ -1,10 +1,14 @@
-import { ClosedTrade } from './../shared/interfaces/closed-trade';
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { SelectedAccountService } from '../shared/service/selected-account-service';
 import { AppService } from '../shared/service/app.service';
 import { Router } from '@angular/router';
+import { TradeMetric } from '../shared/interfaces/trade-metrics';
+import { DateFormatPipe } from '../shared/pipes/date-format.pipe';
+import { HoldingTimePipe } from '../shared/pipes/holding-time.pipe';
+import { CurrencyPipe } from '../shared/pipes/currency.pipe';
+import { RoundPipe } from '../shared/pipes/round.pipe';
 
 @Component({
   selector: 'app-tradelog',
@@ -16,6 +20,7 @@ export class TradelogComponent implements OnInit {
   closedTradeRowData: any = [];
   openTradeRowData: any = [];
   accountID: string = '';
+  tradeMetrics: TradeMetric = new TradeMetric();
 
   public defaultColDef: ColDef = {
     flex: 1,
@@ -40,32 +45,56 @@ export class TradelogComponent implements OnInit {
     {
       headerName: "Buy Price",
       field: "avg_buy_price",
-      width: 300
+      width: 300,
+      valueFormatter: this.currencyFormatter,
     },
     {
       headerName: "Sell Price",
       field: "avg_sell_price",
-      width: 300
+      width: 300,
+      valueFormatter: this.currencyFormatter,
     },
     {
-      headerName: "Profit/Loss",
-      field: "net_profit",
-      width: 300
+      headerName: "Profit/Loss %",
+      field: "profit_percentage",
+      width: 300,
+      valueFormatter: this.percentFormatter,
     },
     {
       headerName: "R-Multiple",
       field: "r_multiple",
-      width: 300
+      width: 300,
+      valueFormatter: this.numberFormatter,
+    },
+    {
+      headerName: "Holding time",
+      field: "holding_time",
+      width: 300,
+      valueFormatter: this.holdingTimeFormatter,
+    },
+    {
+      headerName: "Opened Date",
+      field: "open_timestamp",
+      width: 300,
+      valueFormatter: this.dateFormatter
     },
     {
       headerName: "Opened Time",
       field: "open_timestamp",
-      width: 300
+      width: 300,
+      valueFormatter: this.timeFormatter,
+    },
+    {
+      headerName: "Closed Date",
+      field: "close_timestamp",
+      width: 300,
+      valueFormatter: this.dateFormatter
     },
     {
       headerName: "Closed Time",
       field: "close_timestamp",
-      width: 300
+      width: 300,
+      valueFormatter: this.timeFormatter,
     },
     {
       headerName: "Position",
@@ -108,51 +137,25 @@ export class TradelogComponent implements OnInit {
     this.appService.getAllClosedTrades(this.accountID).subscribe({
       next: response => {
         if (response.data) {
-          let rowData: any = [];
           response.data.forEach((element: any) => {
-            const tradeInfo = {
-              account_id: String,
-              trade_id: String,
-              quantity: Number,
-              open_timestamp: Date,
-              close_timestamp: Date,
-              one_r: Number,
-              rating: Number,
-              avg_buy_price: Number,
-              avg_sell_price: Number,
-              isin: String,
-              position: String,
-              symbol: String,
-              sector_name: String,
-              industry: String,
-              industry_new_name: String,
-              igroup_name: String,
-              company_name: String,
-              net_profit: Number,
-              r_multiple: Number,
+            this.tradeMetrics.avgHoldingTime += element.holding_time;
+            if (element.net_profit >= 0) {
+              this.tradeMetrics.totalWinner++;
+              this.tradeMetrics.grossProfit += element.net_profit
+            } else {
+              this.tradeMetrics.totalLooser++;
+              this.tradeMetrics.grossLoss -= element.net_profit
             }
-
-            tradeInfo.account_id = element.ClosedTrade.account_id;
-            tradeInfo.trade_id = element.ClosedTrade.trade_id;
-            tradeInfo.quantity = element.ClosedTrade.quantity;
-            tradeInfo.open_timestamp = element.ClosedTrade.open_timestamp;
-            tradeInfo.close_timestamp = element.ClosedTrade.close_timestamp;
-            tradeInfo.one_r = element.ClosedTrade.one_r;
-            tradeInfo.rating = element.ClosedTrade.rating;
-            tradeInfo.avg_buy_price = element.ClosedTrade.avg_buy_price;
-            tradeInfo.avg_sell_price = element.ClosedTrade.avg_sell_price;
-            tradeInfo.isin = element.ClosedTrade.isin;
-            tradeInfo.position = element.ClosedTrade.position;
-            tradeInfo.symbol = element.EquityList.symbol;
-            tradeInfo.sector_name = element.EquityList.sector_name;
-            tradeInfo.industry = element.EquityList.industry;
-            tradeInfo.industry_new_name = element.EquityList.industry_new_name;
-            tradeInfo.igroup_name = element.EquityList.igroup_name;
-            tradeInfo.company_name = element.EquityList.company_name;
-            rowData.push(tradeInfo);
+            this.tradeMetrics.totalProfit += element.net_profit;
+            this.tradeMetrics.expectancy += element.r_multiple;
           });
-          console.log(rowData);
-          this.closedTradeRowData = rowData;
+          this.tradeMetrics.totalTrades = response.data.length;
+          this.tradeMetrics.expectancy /= this.tradeMetrics.totalTrades;
+          this.tradeMetrics.profitFactor = (this.tradeMetrics.grossProfit / this.tradeMetrics.grossLoss);
+          this.tradeMetrics.avgHoldingTime /= this.tradeMetrics.totalTrades;
+          this.tradeMetrics.winPercentage = (this.tradeMetrics.totalWinner / this.tradeMetrics.totalTrades) * 100;
+          console.log(this.tradeMetrics);
+          this.closedTradeRowData = response.data;
         }
       },
       error: error => {
@@ -174,6 +177,27 @@ export class TradelogComponent implements OnInit {
     this.tradelogGridApi.sizeColumnsToFit();
   }
 
+  dateFormatter(params: any) {
+    return new DateFormatPipe().transform(params.value, 'dd MMM yyyy');
+  }
 
+  timeFormatter(params: any) {
+    return new DateFormatPipe().transform(params.value, 'hh:mm:ss');
+  }
 
+  holdingTimeFormatter(params: any) {
+    return new HoldingTimePipe().transform(params.value);
+  }
+
+  currencyFormatter(params: any) {
+    return new CurrencyPipe().transform(params.value, 'INR');
+  }
+
+  percentFormatter(params: any) {
+    return new RoundPipe().transform(params.value, true);
+  }
+
+  numberFormatter(params: any) {
+    return new RoundPipe().transform(params.value);
+  }
 }

@@ -1,34 +1,37 @@
 <div class="tradelog-container">
     <div class="tradelog-options">
-        <h1>Trade Logs</h1>
         <div class="spacer"></div>
-        <!--Have any option for this page headings like buttons and all-->
         <app-upload-file></app-upload-file>
     </div>
     <!-- Row 1: Stats Cards -->
     <div class="stats-row">
         <!-- Card 1: Total Sales -->
         <div class="card">
-            <h2>Total Sales</h2>
-            <p>$10,000</p>
+            <h2>Total Trades</h2>
+            <p>{{tradeMetrics.totalTrades}}</p>
         </div>
 
         <!-- Card 2: Revenue -->
         <div class="card">
-            <h2>Revenue</h2>
-            <p>$8,500</p>
+            <h2>Win Percentage</h2>
+            <p>{{tradeMetrics.winPercentage | round:true}}</p>
         </div>
 
         <!-- Card 3: Expenses -->
         <div class="card">
-            <h2>Expenses</h2>
-            <p>$1,500</p>
+            <h2>Profit Factor</h2>
+            <p>{{tradeMetrics.profitFactor | round}}</p>
         </div>
 
         <!-- Card 4: Profit -->
         <div class="card">
-            <h2>Profit</h2>
-            <p>$7,500</p>
+            <h2>Total Profit</h2>
+            <p>{{tradeMetrics.totalProfit | currency: 'INR'}}</p>
+        </div>
+
+        <div class="card">
+            <h2>Avg Holding Time</h2>
+            <p>{{tradeMetrics.avgHoldingTime | holdingTime}}</p>
         </div>
     </div>
 

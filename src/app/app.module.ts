@@ -36,6 +36,13 @@ import { AppService } from './shared/service/app.service';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { DateRangePickerComponent } from './shared/component/date-range-picker/date-range-picker.component';
+import { DatePickerComponent } from './shared/component/date-picker/date-picker.component';
+import { DateFormatPipe } from './shared/pipes/date-format.pipe';
+import { HoldingTimePipe } from './shared/pipes/holding-time.pipe';
+import { CurrencyPipe } from './shared/pipes/currency.pipe';
+import { RoundPipe } from './shared/pipes/round.pipe';
 
 @NgModule({
   declarations: [
@@ -52,7 +59,13 @@ import { MatTabsModule } from '@angular/material/tabs';
     IndividualTradeComponent,
     LoginComponent,
     SignupComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    DateRangePickerComponent,
+    DatePickerComponent,
+    DateFormatPipe,
+    HoldingTimePipe,
+    CurrencyPipe,
+    RoundPipe
   ],
   imports: [
     BrowserModule,
@@ -75,7 +88,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatMenuModule
   ],
   providers: [AuthService, AppService],
   bootstrap: [AppComponent]

@@ -9,7 +9,12 @@
         </div>
         <div class="metric-row">
             <span>
-                <p>Executed on: {{transaction.execution_timestamp_stamp}}</p>
+                <p>Date: {{transaction.execution_timestamp_stamp | dateFormat: 'dd MMM yyyy'}}</p>
+            </span>
+        </div>
+        <div class="metric-row">
+            <span>
+                <p>Time: {{transaction.execution_timestamp_stamp | dateFormat: 'HH:mm'}}</p>
             </span>
         </div>
         <div class="metric-row">

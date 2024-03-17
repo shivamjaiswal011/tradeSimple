@@ -8,19 +8,25 @@
             <div class="metric-row">
                 <span>
                     <h2>Avg Buy Price</h2>
-                    <h2><b>{{trade.avg_buy_price}}</b></h2>
+                    <h2><b>{{trade.avg_buy_price | currency: 'INR'}}</b></h2>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
                     <h2>Avg Sell Price</h2>
-                    <h2><b>{{trade.avg_sell_price}}</b></h2>
+                    <h2><b>{{trade.avg_sell_price | currency: 'INR'}}</b></h2>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
                     <h2>Net Profit</h2>
-                    <h2><b>{{netProfit}}</b></h2>
+                    <h2><b>{{trade.net_profit | currency: 'INR'}}</b></h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Profit %</h2>
+                    <h2><b>{{trade.profit_percentage | round:true}}</b></h2>
                 </span>
             </div>
             <div class="metric-row">
@@ -31,15 +37,38 @@
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>1 R</h2>
-                    <h2>{{trade.one_r}}</h2>
+                    <h2>Stop Loss</h2>
+                    <h2>{{trade.avg_buy_price - trade.one_r | currency: 'INR'}}</h2>
                 </span>
-
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>1 R</h2>
+                    <h2>{{trade.one_r | currency: 'INR'}}</h2>
+                </span>
             </div>
             <div class="metric-row">
                 <span>
                     <h2>R-Multiple</h2>
-                    <h2>{{rMultiple}}</h2>
+                    <h2>{{trade.r_multiple | round}}</h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Sector</h2>
+                    <h2>{{trade.sector_name}}</h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Industory</h2>
+                    <h2>{{trade.igroup_name}}</h2>
+                </span>
+            </div>
+            <div class="metric-row">
+                <span>
+                    <h2>Trade Holding Time</h2>
+                    <h2>{{trade.holding_time | holdingTime}}</h2>
                 </span>
             </div>
             <div class="metric-row">

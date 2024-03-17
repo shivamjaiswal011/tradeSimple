@@ -1,46 +1,36 @@
-#navbar {
-    height: inherit;
+mat-toolbar {
+    height: 100%;
     margin: 0;
     background-color: var(--background-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-mat-toolbar {
-
-    height: 60px;
+    flex-direction: row;
     padding: 0;
-    background-color: var(--background-color);
-}
-
-.mat-toolbar-row {
     color: white;
-    height: inherit;
 }
 
-.mat-form-field {
-    width: 100%;
-}
-
-.mat-form-field-wrapper {
-    display: flex;
-    /* Ensure proper alignment of inputs and suffix */
-}
-
-.mat-icon-button {
-    color: var(--primary-color);
-    /* Customize icon color */
+.header {
+    margin-left: 1%;
 }
 
 .dateRange {
-    display: flex;
-    height: inherit;
+    height: 100%;
+    width: 22%;
 }
 
 .account-selector {
-    display: flex;
-    height: inherit;
+    height: 100%;
+}
+
+.dateRange mat-form-field {
+    width: 100%;
+    height: 100%;
+}
+
+.account-selector mat-form-field {
+    width: 100%;
+    height: 100%;
 }
 
 mat-datepicker-toggle {

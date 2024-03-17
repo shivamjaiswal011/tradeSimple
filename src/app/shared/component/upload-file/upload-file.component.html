@@ -1,7 +1,9 @@
 <div class="upload-file">
     <div class="file-import-date" *ngIf="accountID!=''">
-        <b>Last Import From:-{{lastImportFromDate}} To:-{{lastImportToDate}}</b>
+        <b>Last Import {{lastImportFromDate | dateFormat: 'dd MMM yyyy'}} To
+            {{lastImportToDate| dateFormat: 'dd MMM yyyy'}}</b>
     </div>
+    <div class="spacer"></div>
     <div class="import-button-container">
         <input type="file" accept=".csv" (change)="onFileSelected($event)" style="display: none;" #fileInput>
         <button mat-raised-button class="upload"
