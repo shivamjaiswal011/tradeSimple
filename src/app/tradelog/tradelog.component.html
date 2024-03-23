@@ -8,39 +8,39 @@
         <!-- Card 1: Total Sales -->
         <div class="card">
             <h2>Total Trades</h2>
-            <p>{{tradeMetrics.totalTrades}}</p>
+            <p>{{tradeService.tradeMetrics.totalTrades}}</p>
         </div>
 
         <!-- Card 2: Revenue -->
         <div class="card">
             <h2>Win Percentage</h2>
-            <p>{{tradeMetrics.winPercentage | round:true}}</p>
+            <p>{{tradeService.tradeMetrics.winPercentage | round:true}}</p>
         </div>
 
         <!-- Card 3: Expenses -->
         <div class="card">
             <h2>Profit Factor</h2>
-            <p>{{tradeMetrics.profitFactor | round}}</p>
+            <p>{{tradeService.tradeMetrics.profitFactor | round}}</p>
         </div>
 
         <!-- Card 4: Profit -->
         <div class="card">
             <h2>Total Profit</h2>
-            <p>{{tradeMetrics.totalProfit | currency: 'INR'}}</p>
+            <p>{{tradeService.tradeMetrics.totalProfit | currency: 'INR'}}</p>
         </div>
 
         <div class="card">
             <h2>Avg Holding Time</h2>
-            <p>{{tradeMetrics.avgHoldingTime | holdingTime}}</p>
+            <p>{{tradeService.tradeMetrics.avgHoldingTime | holdingTime}}</p>
         </div>
     </div>
 
     <!-- Row 2: Chart Cards -->
     <div class="grid-row">
-        <ag-grid-angular style="height: 100%; margin-top: 15px;" class="ag-theme-alpine" [rowData]="closedTradeRowData"
-            [gridOptions]="tradelogGridOptions" [defaultColDef]="defaultColDef" [columnDefs]="colDefs"
-            [suppressRowClickSelection]="false" [sideBar]="false" [pagination]="false"
-            (gridReady)="onTradelogGridReady($event)">
+        <ag-grid-angular style="height: 100%; margin-top: 15px;" class="ag-theme-alpine"
+            [rowData]="tradeService.closedTradeRowData" [gridOptions]="tradelogGridOptions"
+            [defaultColDef]="defaultColDef" [columnDefs]="colDefs" [suppressRowClickSelection]="false" [sideBar]="false"
+            [pagination]="false" (gridReady)="onTradelogGridReady($event)">
         </ag-grid-angular>
     </div>
 </div>

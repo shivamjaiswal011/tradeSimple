@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SharedService } from './shared.service';
 import { SignupRequest } from '../interfaces/signup-request';
 import { Route, Router } from '@angular/router';
+import { SelectedUserAccountService } from './selected-account-service';
+import { User } from '../interfaces/user-info';
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +16,8 @@ export class AuthService {
     private authServiceBaseURL = this.sharedService.getBaseUrl();
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
-    private userIdKey = 'userId';
 
-    constructor(private http: HttpClient, private sharedService: SharedService, private router: Router) { }
+    constructor(private http: HttpClient, private sharedService: SharedService, private router: Router, private userAccountService: SelectedUserAccountService) { }
 
     login(loginRequest: LoginRequest): Observable<any> {
         // Send login request to backend API
@@ -26,9 +27,14 @@ export class AuthService {
     handleLoginResponse(response: any): void {
         // Check if login was successful based on the response
         if (response.token) {
-            // Emit true to indicate successful authentication
+            const user: User = new User();
+            user.userId = response.userInfo.user_id;
+            user.email = response.userInfo.email;
+            user.phoneNumber = response.userInfo.phone_number;
+            user.updatedAt = response.userInfo.updated_at;
+            user.createdAt = response.userInfo.created_at;
+            this.userAccountService.setSelectedUser(user);
             this.isAuthenticatedSubject.next(true);
-            // Optionally, perform any additional actions (e.g., store user data or tokens)
         } else {
             // Handle unsuccessful login (e.g., show error message)
         }
@@ -39,19 +45,14 @@ export class AuthService {
     }
 
     logout(): void {
-        // Logic for logout...
+        this.userAccountService.setSelectedUser(null);
+        this.userAccountService.setSelectedAccount(null);
+        this.userAccountService.setSelectedUserAccounts([]);
         this.isAuthenticatedSubject.next(false);
     }
 
     isAuthenticated(): boolean {
-        if (localStorage.getItem('token') && localStorage.getItem(this.userIdKey)) {
-            this.isAuthenticatedSubject.next(true)
-        }
         return this.isAuthenticatedSubject.value;
-    }
-
-    getUserId(): string | null {
-        return localStorage.getItem(this.userIdKey);
     }
 
 }

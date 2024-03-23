@@ -43,6 +43,7 @@ import { DateFormatPipe } from './shared/pipes/date-format.pipe';
 import { HoldingTimePipe } from './shared/pipes/holding-time.pipe';
 import { CurrencyPipe } from './shared/pipes/currency.pipe';
 import { RoundPipe } from './shared/pipes/round.pipe';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { RoundPipe } from './shared/pipes/round.pipe';
     DateFormatPipe,
     HoldingTimePipe,
     CurrencyPipe,
-    RoundPipe
+    RoundPipe,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

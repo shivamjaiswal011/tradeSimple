@@ -1,0 +1,31 @@
+<div class="profile-container">
+    <h1>User Profile</h1>
+
+    <!-- Display User Information -->
+    <div class="user-info">
+        <h2>User Information</h2>
+        <p>Email: {{ user.email }}</p>
+        <p>Phone Number: {{ user.phoneNumber }}</p>
+        <!-- Add more user information as needed -->
+    </div>
+
+    <!-- Display User's Accounts -->
+    <div class="accounts-list">
+        <h2>Accounts</h2>
+        <ul>
+            <li *ngFor="let account of accountList">{{ account.accountName }}</li>
+            <!-- Display user's accounts dynamically using *ngFor -->
+        </ul>
+    </div>
+
+    <!-- Option to Create New Account -->
+    <div class="create-account">
+        <h2>Create New Account</h2>
+        <form (ngSubmit)="createAccount()">
+            <label for="accountName">Account Name:</label>
+            <input type="text" id="accountName" name="accountName" [(ngModel)]="newAccountName" required>
+            <!-- Use ngModel to bind input value to newAccountName property -->
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+</div>

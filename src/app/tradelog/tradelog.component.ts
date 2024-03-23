@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { SelectedAccountService } from '../shared/service/selected-account-service';
-import { AppService } from '../shared/service/app.service';
 import { Router } from '@angular/router';
 import { TradeMetric } from '../shared/interfaces/trade-metrics';
 import { DateFormatPipe } from '../shared/pipes/date-format.pipe';
 import { HoldingTimePipe } from '../shared/pipes/holding-time.pipe';
 import { CurrencyPipe } from '../shared/pipes/currency.pipe';
 import { RoundPipe } from '../shared/pipes/round.pipe';
+import { TradeService } from '../shared/service/trade.service';
 
 @Component({
   selector: 'app-tradelog',
@@ -17,10 +16,6 @@ import { RoundPipe } from '../shared/pipes/round.pipe';
 })
 export class TradelogComponent implements OnInit {
   tradelogGridParam: any;
-  closedTradeRowData: any = [];
-  openTradeRowData: any = [];
-  accountID: string = '';
-  tradeMetrics: TradeMetric = new TradeMetric();
 
   public defaultColDef: ColDef = {
     flex: 1,
@@ -111,7 +106,7 @@ export class TradelogComponent implements OnInit {
   tradelogGridColumnApi: any;
   tradelogGridOptions: GridOptions<any> | undefined;
 
-  constructor(private selectedAccountService: SelectedAccountService, private appService: AppService, private router: Router) {
+  constructor(private router: Router, protected tradeService: TradeService) {
     this.tradelogGridOptions = {
       onRowClicked: this.onRowClicked.bind(this)
     };
@@ -119,49 +114,11 @@ export class TradelogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.selectedAccountService.getSelectedAccount().subscribe({
-      next: response => {
-        if (response != null) {
-          this.accountID = response.accountID;
-          console.log(this.accountID);
-          this.getOpenTradesOnAccountChange();
-        }
-      },
-      error: error => {
-        console.log("Error fetching selected account:", error);
-      }
-    });
+
   }
 
   getOpenTradesOnAccountChange() {
-    this.appService.getAllClosedTrades(this.accountID).subscribe({
-      next: response => {
-        if (response.data) {
-          response.data.forEach((element: any) => {
-            this.tradeMetrics.avgHoldingTime += element.holding_time;
-            if (element.net_profit >= 0) {
-              this.tradeMetrics.totalWinner++;
-              this.tradeMetrics.grossProfit += element.net_profit
-            } else {
-              this.tradeMetrics.totalLooser++;
-              this.tradeMetrics.grossLoss -= element.net_profit
-            }
-            this.tradeMetrics.totalProfit += element.net_profit;
-            this.tradeMetrics.expectancy += element.r_multiple;
-          });
-          this.tradeMetrics.totalTrades = response.data.length;
-          this.tradeMetrics.expectancy /= this.tradeMetrics.totalTrades;
-          this.tradeMetrics.profitFactor = (this.tradeMetrics.grossProfit / this.tradeMetrics.grossLoss);
-          this.tradeMetrics.avgHoldingTime /= this.tradeMetrics.totalTrades;
-          this.tradeMetrics.winPercentage = (this.tradeMetrics.totalWinner / this.tradeMetrics.totalTrades) * 100;
-          console.log(this.tradeMetrics);
-          this.closedTradeRowData = response.data;
-        }
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
+
   }
 
   onRowClicked(event: any): void {

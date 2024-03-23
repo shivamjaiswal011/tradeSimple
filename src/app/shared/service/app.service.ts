@@ -34,4 +34,9 @@ export class AppService {
     getAllTransactionForThisTrade(tradeId: string, tradeType: string): Observable<any> {
         return this.http.get<any>(`${this.appServiceBaseURL}/transactions?tradeId=${tradeId}&tradeType=${tradeType}`)
     }
+
+    createAccount(accountName: string, userId: string): Observable<any> {
+        const body = { user_id: userId, account_name: accountName };
+        return this.http.post<any>(`${this.appServiceBaseURL}/accounts/create`, JSON.stringify(body));
+    }
 }

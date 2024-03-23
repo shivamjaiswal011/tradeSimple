@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   password: string = '';
   errorMessage: string = '';
   LoginRequest: LoginRequest = new LoginRequest();
-  userInfo: User = new User();
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -25,9 +24,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.LoginRequest).subscribe({
       next: response => {
         this.authService.handleLoginResponse(response);
-        this.userInfo.userId = response.userInfo.user_id;
-        localStorage.setItem('userId', this.userInfo.userId);
-        localStorage.setItem('token', response.token);
         this.router.navigate(['/']); // Navigate to home
       },
       error: error => {

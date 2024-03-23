@@ -40,7 +40,7 @@ strong {
 }
 
 mat-divider {
-    background-color: rgba(0, 0, 0, .12);
+    background-color: var(--secondary-background-color);
 }
 
 :root {
@@ -48,7 +48,7 @@ mat-divider {
     --background-color: #030303;
     --secondary-color: #EEC759;
     --secondary-background-color: rgba(255, 255, 255, .1);
-    --light-font: #7a7979;
+    --light-font: #aeaeae;
 }
 
 .ag-theme-alpine {

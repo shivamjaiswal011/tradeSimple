@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../service/app.service';
 import { AuthService } from '../../service/auth.service';
-import { SelectedAccountService } from '../../service/selected-account-service';
+import { SelectedUserAccountService } from '../../service/selected-account-service';
 
 @Component({
   selector: 'app-upload-file',
@@ -10,16 +10,23 @@ import { SelectedAccountService } from '../../service/selected-account-service';
 })
 export class UploadFileComponent implements OnInit {
   selectedFile: File | null = null;
-  userID: string | null = null;
+  userID: any = null;
   accountID: string = '';
   lastImportFromDate: string = '';
   lastImportToDate: string = '';
 
-  constructor(private appService: AppService, private authService: AuthService, private selectedAccountService: SelectedAccountService) { }
+  constructor(private appService: AppService, private authService: AuthService, private userAccountService: SelectedUserAccountService) { }
 
   ngOnInit(): void {
-    this.userID = this.authService.getUserId();
-    this.selectedAccountService.getSelectedAccount().subscribe({
+    this.userAccountService.getSelectedUser().subscribe({
+      next: response => {
+        this.userID = response?.userId;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+    this.userAccountService.getSelectedAccount().subscribe({
       next: response => {
         if (response != null) {
           this.accountID = response.accountID;

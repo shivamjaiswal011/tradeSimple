@@ -44,3 +44,11 @@
     align-items: baseline;
     justify-content: space-between;
 }
+
+input {
+    height: 70%;
+    width: 20%;
+    color: white;
+    border-color: var(--light-font);
+    background-color: var(--secondary-background-color);
+}

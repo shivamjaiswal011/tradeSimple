@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { IndividualTradeComponent } from './individual-trade/individual-trade.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'tradelog', component: TradelogComponent, canActivate: [AuthGuard] },
   { path: 'journal', component: JournalComponent, canActivate: [AuthGuard] },
   { path: 'authentication', component: AuthenticationComponent },
-  { path: 'individualTrade', component: IndividualTradeComponent, canActivate: [AuthGuard] }
+  { path: 'individualTrade', component: IndividualTradeComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -2,79 +2,83 @@
     <div class="trade-metrics">
         <div class="metric-card">
             <h1>
-                <b>{{trade.symbol}}</b>
+                {{trade.symbol}}
             </h1>
             <div class="divider"></div>
             <div class="metric-row">
                 <span>
-                    <h2>Avg Buy Price</h2>
-                    <h2><b>{{trade.avg_buy_price | currency: 'INR'}}</b></h2>
+                    <p>Avg Buy Price</p>
+                    <p>{{trade.avg_buy_price | currency: 'INR'}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Avg Sell Price</h2>
-                    <h2><b>{{trade.avg_sell_price | currency: 'INR'}}</b></h2>
+                    <p>Avg Sell Price</p>
+                    <p>{{trade.avg_sell_price | currency: 'INR'}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Net Profit</h2>
-                    <h2><b>{{trade.net_profit | currency: 'INR'}}</b></h2>
+                    <p>Net Profit</p>
+                    <p>{{trade.net_profit | currency: 'INR'}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Profit %</h2>
-                    <h2><b>{{trade.profit_percentage | round:true}}</b></h2>
+                    <p>Profit %</p>
+                    <p>{{trade.profit_percentage | round:true}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Quantity</h2>
-                    <h2>{{trade.quantity}}</h2>
+                    <p>Quantity</p>
+                    <p>{{trade.quantity}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Stop Loss</h2>
-                    <h2>{{trade.avg_buy_price - trade.one_r | currency: 'INR'}}</h2>
+                    <p>Stop Loss</p>
+                    <div class="spacer"></div>
+                    <input type="number" [(ngModel)]="trade.stoploss" name="stoploss" placeholder="Stop Loss">
+                    <span>{{ trade.stoploss | currency: 'INR' }}</span>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>1 R</h2>
-                    <h2>{{trade.one_r | currency: 'INR'}}</h2>
+                    <p>One R</p>
+                    <div class="spacer"></div>
+                    <input type="number" [(ngModel)]="trade.oneR" name="oneR" placeholder="1 R">
+                    <span>{{ trade.oneR | currency: 'INR' }}</span>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>R-Multiple</h2>
-                    <h2>{{trade.r_multiple | round}}</h2>
+                    <p>R-Multiple</p>
+                    <p>{{trade.r_multiple | round}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Sector</h2>
-                    <h2>{{trade.sector_name}}</h2>
+                    <p>Sector</p>
+                    <p>{{trade.sector_name}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Industory</h2>
-                    <h2>{{trade.igroup_name}}</h2>
+                    <p>Industory</p>
+                    <p>{{trade.igroup_name}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Trade Holding Time</h2>
-                    <h2>{{trade.holding_time | holdingTime}}</h2>
+                    <p>Trade Holding Time</p>
+                    <p>{{trade.holding_time | holdingTime}}</p>
                 </span>
             </div>
             <div class="metric-row">
                 <span>
-                    <h2>Position</h2>
-                    <h2>{{trade.position}}</h2>
+                    <p>Position</p>
+                    <p>{{trade.position}}</p>
                 </span>
             </div>
         </div>

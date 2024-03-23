@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Account } from '../interfaces/account';
+import { User } from '../interfaces/user-info';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SelectedAccountService {
+export class SelectedUserAccountService {
 
+    private selectedUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+    public selectedUser$: Observable<User | null> = this.selectedUserSubject.asObservable();
     private selectedAccountSubject: BehaviorSubject<Account | null> = new BehaviorSubject<Account | null>(null);
     public selectedAccount$: Observable<Account | null> = this.selectedAccountSubject.asObservable();
-    private selectedAccountDetailsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
-    public selectedAccountDetails$: Observable<Account[]> = this.selectedAccountDetailsSubject.asObservable();
+    private selectedUserAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+    public selectedUserAccounts$: Observable<Account[]> = this.selectedUserAccountsSubject.asObservable();
 
     constructor() { }
+
+    setSelectedUser(user: User | null): void {
+        this.selectedUserSubject.next(user);
+    }
+
+    getSelectedUser(): Observable<User | null> {
+        return this.selectedUser$;
+    }
 
     setSelectedAccount(account: Account | null): void {
         this.selectedAccountSubject.next(account);
@@ -22,11 +33,11 @@ export class SelectedAccountService {
         return this.selectedAccount$;
     }
 
-    setSelectedAccountDetails(accounts: Account[]): void {
-        this.selectedAccountDetailsSubject.next(accounts);
+    setSelectedUserAccounts(accounts: Account[]): void {
+        this.selectedUserAccountsSubject.next(accounts);
     }
 
-    getSelectedAccountDetails(): Observable<Account[]> {
-        return this.selectedAccountDetails$;
+    getSelectedUserAccounts(): Observable<Account[]> {
+        return this.selectedUserAccounts$;
     }
 }
