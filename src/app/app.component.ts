@@ -6,6 +6,7 @@ import { Account } from './shared/interfaces/account';
 import { TradeService } from './shared/service/trade.service';
 import { Subscription } from 'rxjs';
 import { SelectedUserAccountService } from './shared/service/selected-account-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,80 +18,58 @@ export class AppComponent implements OnInit, OnDestroy {
   isSidenavOpen: boolean = true;
   title: string = 'Trade Simple';
   isAuthenticated: boolean = false;
-  userId: any = null;
   accounts: Account[] = [];
-  selectedAccount: Account | null = new Account();
 
   private selectedAccountSubscription: Subscription | undefined;
-  private userDetailsSubscription: Subscription | undefined;
   private userAccountsSubscription: Subscription | undefined;
-
-  constructor(private authService: AuthService, private appService: AppService, private userAccountService: SelectedUserAccountService, private tradeService: TradeService) { }
+  private userAuthenticationSubscription: Subscription | undefined;
+  constructor(private authService: AuthService, private appService: AppService, private userAccountService: SelectedUserAccountService, private tradeService: TradeService, private router: Router) { }
 
   ngOnInit(): void {
     this.isUserAuthentic();
+    this.selectedAccountSubscription = this.userAccountService.getSelectedAccount().subscribe(response => {
+      if (response != null) {
+        console.log(response);
+        this.tradeService.initializeTradesData(response);
+      }
+      else {
+        this.tradeService.cleanTradesData();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions to prevent memory leaks
+    this.userAuthenticationSubscription?.unsubscribe();
     this.selectedAccountSubscription?.unsubscribe();
-    this.userDetailsSubscription?.unsubscribe();
     this.userAccountsSubscription?.unsubscribe();
   }
 
   isUserAuthentic() {
-    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
+    this.userAuthenticationSubscription = this.authService.isAuthenticated$.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
       if (this.isAuthenticated) {
-        this.setUserDetails();
+        this.setUserAccounts();
       } else {
         this.tradeService.cleanTradesData();
       }
     });
   }
 
-  setUserDetails() {
-    this.userDetailsSubscription = this.userAccountService.getSelectedUser().subscribe({
-      next: response => {
-        if (response) {
-          this.userId = response?.userId;
-          this.setUserAccounts();
-        } else {
-          console.log(response, "Didn't get User");
-        }
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-  }
-
   setUserAccounts() {
-    this.userAccountsSubscription = this.appService.getAccountName(this.userId).subscribe({
+    const userId = this.userAccountService.user?.userId ? (this.userAccountService.user?.userId) : null;
+    this.userAccountsSubscription = this.appService.getAccountName(userId).subscribe({
       next: response => {
         if (response.Account) {
+          console.log(response);
           this.accounts = response.Account.map((element: any) => this.createAccountObject(element));
-          this.userAccountService.setSelectedUserAccounts(this.accounts);
-          this.setAccount();
+          this.userAccountService.userAccounts = this.accounts;
         }
       },
       error: err => {
         console.log("error", err)
       }
     });
-  }
-
-  setAccount() {
-    this.selectedAccountSubscription = this.userAccountService.getSelectedAccount().subscribe(response => {
-      this.selectedAccount = response;
-      if (this.selectedAccount) {
-        this.initializeAlltradeData();
-      }
-    });
-  }
-
-  initializeAlltradeData() {
-    this.tradeService.initializeTradesData(this.selectedAccount!);
   }
 
   createAccountObject(account: any): Account {

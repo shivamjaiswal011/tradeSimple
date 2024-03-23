@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { TradeMetric } from "../interfaces/trade-metrics";
-import { SelectedUserAccountService } from "./selected-account-service";
 import { AppService } from "./app.service";
 import { Account } from "../interfaces/account";
 
@@ -13,13 +12,15 @@ export class TradeService {
     openTradeRowData: any = [];
     tradeMetrics: TradeMetric = new TradeMetric();
 
-    constructor(private userAccountService: SelectedUserAccountService, private appService: AppService) {
+    selectedAccount: Account | null = new Account();
+    constructor(private appService: AppService) {
     }
 
-    initializeTradesData(account: Account) {
+    initializeTradesData(selectedAccount: Account) {
+        console.log("called trades");
         this.cleanTradesData();
-        this.initializeClosedTrades(account);
-        this.initializeOpenTrades(account);
+        this.initializeClosedTrades(selectedAccount);
+        this.initializeOpenTrades(selectedAccount);
     }
 
     initializeClosedTrades(account: Account) {
@@ -27,7 +28,7 @@ export class TradeService {
             next: response => {
                 if (response.data) {
                     this.closedTradeRowData = response.data;
-                    this.initializeTradeMetrics();
+                    this.tradeMetrics = this.initializeTradeMetrics();
                 }
             },
             error: error => {
@@ -40,24 +41,26 @@ export class TradeService {
 
     }
 
-    initializeTradeMetrics() {
+    initializeTradeMetrics(): TradeMetric {
+        const tradeMetrics = new TradeMetric();
         this.closedTradeRowData.forEach((element: any) => {
-            this.tradeMetrics.avgHoldingTime += element.holding_time;
+            tradeMetrics.avgHoldingTime += element.holding_time;
             if (element.net_profit >= 0) {
-                this.tradeMetrics.totalWinner++;
-                this.tradeMetrics.grossProfit += element.net_profit
+                tradeMetrics.totalWinner++;
+                tradeMetrics.grossProfit += element.net_profit
             } else {
-                this.tradeMetrics.totalLooser++;
-                this.tradeMetrics.grossLoss -= element.net_profit
+                tradeMetrics.totalLooser++;
+                tradeMetrics.grossLoss -= element.net_profit
             }
-            this.tradeMetrics.totalProfit += element.net_profit;
-            this.tradeMetrics.expectancy += element.r_multiple;
+            tradeMetrics.totalProfit += element.net_profit;
+            tradeMetrics.expectancy += element.r_multiple;
         });
-        this.tradeMetrics.totalTrades = this.closedTradeRowData.length;
-        this.tradeMetrics.expectancy /= this.tradeMetrics.totalTrades;
-        this.tradeMetrics.profitFactor = (this.tradeMetrics.grossProfit / this.tradeMetrics.grossLoss);
-        this.tradeMetrics.avgHoldingTime /= this.tradeMetrics.totalTrades;
-        this.tradeMetrics.winPercentage = (this.tradeMetrics.totalWinner / this.tradeMetrics.totalTrades) * 100;
+        tradeMetrics.totalTrades = this.closedTradeRowData.length;
+        tradeMetrics.expectancy /= tradeMetrics.totalTrades;
+        tradeMetrics.profitFactor = (tradeMetrics.grossProfit / tradeMetrics.grossLoss);
+        tradeMetrics.avgHoldingTime /= tradeMetrics.totalTrades;
+        tradeMetrics.winPercentage = (tradeMetrics.totalWinner / tradeMetrics.totalTrades) * 100;
+        return tradeMetrics;
     }
 
     cleanTradesData() {

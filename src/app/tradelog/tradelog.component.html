@@ -5,40 +5,55 @@
     </div>
     <!-- Row 1: Stats Cards -->
     <div class="stats-row">
-        <!-- Card 1: Total Sales -->
+        <!-- Card 1: Total Trades -->
         <div class="card">
             <h2>Total Trades</h2>
             <p>{{tradeService.tradeMetrics.totalTrades}}</p>
         </div>
 
-        <!-- Card 2: Revenue -->
+        <!-- Card 2: Win Percentage -->
         <div class="card">
             <h2>Win Percentage</h2>
             <p>{{tradeService.tradeMetrics.winPercentage | round:true}}</p>
         </div>
 
-        <!-- Card 3: Expenses -->
+        <!-- Card 3: Profit Factor -->
         <div class="card">
             <h2>Profit Factor</h2>
             <p>{{tradeService.tradeMetrics.profitFactor | round}}</p>
         </div>
 
-        <!-- Card 4: Profit -->
+        <!-- Card 4: Total Profit -->
         <div class="card">
             <h2>Total Profit</h2>
             <p>{{tradeService.tradeMetrics.totalProfit | currency: 'INR'}}</p>
         </div>
 
+        <!-- Card 5: Avg Holding Time -->
         <div class="card">
             <h2>Avg Holding Time</h2>
             <p>{{tradeService.tradeMetrics.avgHoldingTime | holdingTime}}</p>
         </div>
     </div>
 
-    <!-- Row 2: Chart Cards -->
+    <!-- Row 2: TradeTabs -->
+    <div class="trade-tabs">
+        <button class="tab" [class.active]="selectedTradeType === 'closed'" (click)="selectTradeType('closed')">Closed
+            Trades</button>
+        <button class="tab" [class.active]="selectedTradeType === 'open'" (click)="selectTradeType('open')">Open
+            Trades</button>
+    </div>
+
+    <!-- Row 3: Chart Cards -->
     <div class="grid-row">
-        <ag-grid-angular style="height: 100%; margin-top: 15px;" class="ag-theme-alpine"
-            [rowData]="tradeService.closedTradeRowData" [gridOptions]="tradelogGridOptions"
+        <ag-grid-angular *ngIf="selectedTradeType === 'closed'" style="height: 100%; margin-top: 15px;"
+            class="ag-theme-alpine" [rowData]="tradeService.closedTradeRowData" [gridOptions]="tradelogGridOptions"
+            [defaultColDef]="defaultColDef" [columnDefs]="colDefs" [suppressRowClickSelection]="false" [sideBar]="false"
+            [pagination]="false" (gridReady)="onTradelogGridReady($event)">
+        </ag-grid-angular>
+
+        <ag-grid-angular *ngIf="selectedTradeType === 'open'" style="height: 100%; margin-top: 15px;"
+            class="ag-theme-alpine" [rowData]="tradeService.openTradeRowData" [gridOptions]="tradelogGridOptions"
             [defaultColDef]="defaultColDef" [columnDefs]="colDefs" [suppressRowClickSelection]="false" [sideBar]="false"
             [pagination]="false" (gridReady)="onTradelogGridReady($event)">
         </ag-grid-angular>

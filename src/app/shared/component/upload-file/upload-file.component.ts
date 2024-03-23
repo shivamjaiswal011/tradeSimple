@@ -1,45 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppService } from '../../service/app.service';
 import { AuthService } from '../../service/auth.service';
 import { SelectedUserAccountService } from '../../service/selected-account-service';
+import { Subscription } from 'rxjs';
+import { Account } from '../../interfaces/account';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.css']
 })
-export class UploadFileComponent implements OnInit {
+export class UploadFileComponent implements OnInit, OnDestroy {
   selectedFile: File | null = null;
-  userID: any = null;
-  accountID: string = '';
-  lastImportFromDate: string = '';
-  lastImportToDate: string = '';
+  selectedAccount: Account | null = new Account();
+  private selectedAccountSubscription: Subscription | undefined;
 
-  constructor(private appService: AppService, private authService: AuthService, private userAccountService: SelectedUserAccountService) { }
+  constructor(private appService: AppService, private userAccountService: SelectedUserAccountService) { }
 
   ngOnInit(): void {
-    this.userAccountService.getSelectedUser().subscribe({
+    this.selectedAccountSubscription = this.userAccountService.getSelectedAccount().subscribe({
       next: response => {
-        this.userID = response?.userId;
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-    this.userAccountService.getSelectedAccount().subscribe({
-      next: response => {
-        if (response != null) {
-          this.accountID = response.accountID;
-          this.lastImportFromDate = response.lastImportFromDate
-          this.lastImportToDate = response.lastImportToDate
-        }
-        else
-          console.log("No Account is Selected");
+        this.selectedAccount = response;
       },
       error: error => {
         console.log("Error fetching selected account:", error);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.selectedAccountSubscription?.unsubscribe();
   }
 
   onFileSelected(event: any): void {
@@ -50,11 +40,10 @@ export class UploadFileComponent implements OnInit {
     }
 
     // Ensure userId and accountId are not null
-    if (this.userID && this.accountID) {
+    if (this.selectedAccount?.accountID) {
       const formData = new FormData();
       formData.append('csv', this.selectedFile);
-      formData.append('user_id', this.userID);
-      formData.append('account_id', this.accountID);
+      formData.append('account_id', this.selectedAccount?.accountID);
 
       this.appService.uploadCsv(formData).subscribe({
         next: response => {

@@ -1,7 +1,7 @@
 <div class="upload-file">
-    <div class="file-import-date" *ngIf="accountID!=''">
-        <b>Last Import {{lastImportFromDate | dateFormat: 'dd MMM yyyy'}} To
-            {{lastImportToDate| dateFormat: 'dd MMM yyyy'}}</b>
+    <div class="file-import-date" *ngIf="selectedAccount != null">
+        <b>Last Import {{selectedAccount.lastImportFromDate | dateFormat: 'dd MMM yyyy'}} To
+            {{selectedAccount.lastImportToDate| dateFormat: 'dd MMM yyyy'}}</b>
     </div>
     <div class="spacer"></div>
     <div class="import-button-container">

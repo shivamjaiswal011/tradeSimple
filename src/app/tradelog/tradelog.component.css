@@ -13,6 +13,25 @@
     color: white;
 }
 
+.tab {
+    flex: 1;
+    background: var(--secondary-background-color);
+    padding: 12px;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.tab.active {
+    background-color: var(--primary-color);
+    color: white;
+    /* Adjust the color as needed */
+}
+
+.tab:hover {
+    border-bottom: solid 2px white;
+}
+
 .stats-row {
     display: flex;
     gap: 20px;

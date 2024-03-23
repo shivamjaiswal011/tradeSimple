@@ -21,6 +21,7 @@
 
 .navbar {
     height: 10%;
+    min-height: 80px;
     width: 100%;
     border-bottom: solid var(--secondary-background-color);
 }

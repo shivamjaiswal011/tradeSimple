@@ -4,8 +4,8 @@
     <!-- Display User Information -->
     <div class="user-info">
         <h2>User Information</h2>
-        <p>Email: {{ user.email }}</p>
-        <p>Phone Number: {{ user.phoneNumber }}</p>
+        <p>Email: {{ userAccountService.user?.email }}</p>
+        <p>Phone Number: {{ userAccountService.user?.phoneNumber }}</p>
         <!-- Add more user information as needed -->
     </div>
 
@@ -13,7 +13,7 @@
     <div class="accounts-list">
         <h2>Accounts</h2>
         <ul>
-            <li *ngFor="let account of accountList">{{ account.accountName }}</li>
+            <li *ngFor="let account of userAccountService.userAccounts">{{ account.accountName }}</li>
             <!-- Display user's accounts dynamically using *ngFor -->
         </ul>
     </div>

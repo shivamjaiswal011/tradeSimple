@@ -7,32 +7,31 @@
     <div class="stats-row">
         <!-- Card 1: Total Sales -->
         <div class="card">
-            <h2>Net P&L</h2>
-            <p>$10,000</p>
+            <h2>Total Trades</h2>
+            <p>{{tradeService.tradeMetrics.totalTrades}}</p>
         </div>
 
         <!-- Card 2: Revenue -->
         <div class="card">
-            <h2>Revenue</h2>
-            <p>$8,500</p>
+            <h2>Win Percentage</h2>
+            <p>{{tradeService.tradeMetrics.winPercentage | round:true}}</p>
         </div>
 
         <!-- Card 3: Expenses -->
         <div class="card">
-            <h2>Expenses</h2>
-            <p>$1,500</p>
+            <h2>Profit Factor</h2>
+            <p>{{tradeService.tradeMetrics.profitFactor | round}}</p>
         </div>
 
         <!-- Card 4: Profit -->
         <div class="card">
-            <h2>Profit</h2>
-            <p>$7,500</p>
+            <h2>Total Profit</h2>
+            <p>{{tradeService.tradeMetrics.totalProfit | currency: 'INR'}}</p>
         </div>
 
-        <!-- Card 5: Customers -->
         <div class="card">
-            <h2>Customers</h2>
-            <p>500</p>
+            <h2>Avg Holding Time</h2>
+            <p>{{tradeService.tradeMetrics.avgHoldingTime | holdingTime}}</p>
         </div>
     </div>
 

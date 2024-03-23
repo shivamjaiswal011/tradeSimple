@@ -33,8 +33,10 @@ export class AuthService {
             user.phoneNumber = response.userInfo.phone_number;
             user.updatedAt = response.userInfo.updated_at;
             user.createdAt = response.userInfo.created_at;
-            this.userAccountService.setSelectedUser(user);
+            this.userAccountService.user = user;
+            localStorage.setItem("userID", user.userId);
             this.isAuthenticatedSubject.next(true);
+            this.router.navigate(['/']);
         } else {
             // Handle unsuccessful login (e.g., show error message)
         }
@@ -45,9 +47,6 @@ export class AuthService {
     }
 
     logout(): void {
-        this.userAccountService.setSelectedUser(null);
-        this.userAccountService.setSelectedAccount(null);
-        this.userAccountService.setSelectedUserAccounts([]);
         this.isAuthenticatedSubject.next(false);
     }
 

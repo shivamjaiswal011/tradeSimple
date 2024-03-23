@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { Router } from '@angular/router';
-import { TradeMetric } from '../shared/interfaces/trade-metrics';
 import { DateFormatPipe } from '../shared/pipes/date-format.pipe';
 import { HoldingTimePipe } from '../shared/pipes/holding-time.pipe';
 import { CurrencyPipe } from '../shared/pipes/currency.pipe';
@@ -16,7 +15,7 @@ import { TradeService } from '../shared/service/trade.service';
 })
 export class TradelogComponent implements OnInit {
   tradelogGridParam: any;
-
+  selectedTradeType: 'closed' | 'open' = 'closed';
   public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 100,
@@ -156,5 +155,9 @@ export class TradelogComponent implements OnInit {
 
   numberFormatter(params: any) {
     return new RoundPipe().transform(params.value);
+  }
+
+  selectTradeType(tradeType: 'closed' | 'open'): void {
+    this.selectedTradeType = tradeType;
   }
 }

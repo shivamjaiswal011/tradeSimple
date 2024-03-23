@@ -1,35 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account } from '../shared/interfaces/account';
 import { SelectedUserAccountService } from '../shared/service/selected-account-service';
 import { AppService } from '../shared/service/app.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
-  accountList: Account[] = [];
-  user: any;
-  constructor(private userAccountService: SelectedUserAccountService, private appService: AppService) { }
+export class ProfileComponent implements OnInit, OnDestroy {
+
+  selectedAccountSubscription: Subscription | undefined;
+  constructor(protected userAccountService: SelectedUserAccountService, private appService: AppService) { }
 
   ngOnInit(): void {
-    this.userAccountService.getSelectedUser().subscribe({
-      next: response => {
-        this.user = response;
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-    this.userAccountService.getSelectedUserAccounts().subscribe({
-      next: response => {
-        this.accountList = response;
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
+  }
+
+  ngOnDestroy(): void {
+    this.selectedAccountSubscription?.unsubscribe();
   }
 
   newAccountName: string = '';
@@ -37,7 +26,8 @@ export class ProfileComponent implements OnInit {
   createAccount(): void {
     // Add validation if needed
     if (this.newAccountName.trim()) {
-      this.appService.createAccount(this.newAccountName, this.accountList[0].userID).subscribe({
+      const user: string = this.userAccountService.user?.userId ? (this.userAccountService.user?.userId) : "";
+      this.selectedAccountSubscription = this.appService.createAccount(this.newAccountName, user).subscribe({
         next: response => {
           console.log(response);
         },
@@ -45,7 +35,6 @@ export class ProfileComponent implements OnInit {
           console.log(error);
         }
       });
-      this.user.accounts.push({ name: this.newAccountName });
       this.newAccountName = '';
     }
   }
