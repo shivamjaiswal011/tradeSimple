@@ -39,8 +39,32 @@
     <div class="trade-calendar-row">
         <!-- Trade Card -->
         <div class="trade-card">
-            <h2>Open/Closed Trades</h2>
-            <!-- Add your trade component here -->
+            <!-- Row 2: TradeTabs -->
+            <div class="trade-tabs">
+                <button class="tab" [class.active]="selectedTradeType === 'closed'"
+                    (click)="selectTradeType('closed')">Closed
+                    Trades</button>
+                <button class="tab" [class.active]="selectedTradeType === 'open'" (click)="selectTradeType('open')">Open
+                    Trades</button>
+            </div>
+
+            <!-- Row 3: Chart Cards -->
+            <div class="grid-row">
+                <ag-grid-angular *ngIf="selectedTradeType === 'closed'" style="height: 100%; margin-top: 15px;"
+                    class="ag-theme-alpine" [rowData]="tradeService.closedTradeRowData"
+                    [gridOptions]="tradeService.tradelogGridOptions" [defaultColDef]="tradeService.defaultColDef"
+                    [columnDefs]="closedTradeColDefs" [suppressRowClickSelection]="false" [sideBar]="false"
+                    [pagination]="false" (gridReady)="tradeService.onTradelogGridReady($event)">
+                </ag-grid-angular>
+
+                <ag-grid-angular *ngIf="selectedTradeType === 'open'" style="height: 100%; margin-top: 15px;"
+                    class="ag-theme-alpine" [rowData]="tradeService.openTradeRowData"
+                    [gridOptions]="tradeService.tradelogGridOptions" [defaultColDef]="tradeService.defaultColDef"
+                    [columnDefs]="openTradeColDefs" [suppressRowClickSelection]="false" [sideBar]="false"
+                    [pagination]="false" (gridReady)="tradeService.onTradelogGridReady($event)">
+                </ag-grid-angular>
+            </div>
+
         </div>
 
         <!-- Calendar Card -->

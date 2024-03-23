@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
-import { ColDef, GridOptions } from 'ag-grid-community';
-import { Router } from '@angular/router';
-import { DateFormatPipe } from '../shared/pipes/date-format.pipe';
-import { HoldingTimePipe } from '../shared/pipes/holding-time.pipe';
-import { CurrencyPipe } from '../shared/pipes/currency.pipe';
-import { RoundPipe } from '../shared/pipes/round.pipe';
+import { ColDef } from 'ag-grid-community';
 import { TradeService } from '../shared/service/trade.service';
 
 @Component({
@@ -14,18 +9,10 @@ import { TradeService } from '../shared/service/trade.service';
   styleUrls: ['./tradelog.component.css']
 })
 export class TradelogComponent implements OnInit {
-  tradelogGridParam: any;
-  selectedTradeType: 'closed' | 'open' = 'closed';
-  public defaultColDef: ColDef = {
-    flex: 1,
-    minWidth: 100,
-    enablePivot: false,
-    sortable: true,
-    filter: true,
-    resizable: true
-  }
 
-  colDefs: ColDef[] = [
+  selectedTradeType: 'closed' | 'open' = 'closed';
+
+  closedTradeColDefs: ColDef[] = [
     {
       headerName: "Symbol",
       field: "symbol",
@@ -40,55 +27,55 @@ export class TradelogComponent implements OnInit {
       headerName: "Buy Price",
       field: "avg_buy_price",
       width: 300,
-      valueFormatter: this.currencyFormatter,
+      valueFormatter: this.tradeService.currencyFormatter,
     },
     {
       headerName: "Sell Price",
       field: "avg_sell_price",
       width: 300,
-      valueFormatter: this.currencyFormatter,
+      valueFormatter: this.tradeService.currencyFormatter,
     },
     {
       headerName: "Profit/Loss %",
       field: "profit_percentage",
       width: 300,
-      valueFormatter: this.percentFormatter,
+      valueFormatter: this.tradeService.percentFormatter,
     },
     {
       headerName: "R-Multiple",
       field: "r_multiple",
       width: 300,
-      valueFormatter: this.numberFormatter,
+      valueFormatter: this.tradeService.numberFormatter,
     },
     {
       headerName: "Holding time",
       field: "holding_time",
       width: 300,
-      valueFormatter: this.holdingTimeFormatter,
+      valueFormatter: this.tradeService.holdingTimeFormatter,
     },
     {
       headerName: "Opened Date",
       field: "open_timestamp",
       width: 300,
-      valueFormatter: this.dateFormatter
+      valueFormatter: this.tradeService.dateFormatter
     },
     {
       headerName: "Opened Time",
       field: "open_timestamp",
       width: 300,
-      valueFormatter: this.timeFormatter,
+      valueFormatter: this.tradeService.timeFormatter,
     },
     {
       headerName: "Closed Date",
       field: "close_timestamp",
       width: 300,
-      valueFormatter: this.dateFormatter
+      valueFormatter: this.tradeService.dateFormatter
     },
     {
       headerName: "Closed Time",
       field: "close_timestamp",
       width: 300,
-      valueFormatter: this.timeFormatter,
+      valueFormatter: this.tradeService.timeFormatter,
     },
     {
       headerName: "Position",
@@ -101,60 +88,76 @@ export class TradelogComponent implements OnInit {
       width: 300
     },
   ];
-  tradelogGridApi: any;
-  tradelogGridColumnApi: any;
-  tradelogGridOptions: GridOptions<any> | undefined;
+  openTradeColDefs: ColDef[] = [
+    {
+      headerName: "Symbol",
+      field: "symbol",
+      width: 300
+    },
+    {
+      headerName: "Total Buy Quantity",
+      field: "total_buy_quantity",
+      width: 300
+    },
+    {
+      headerName: "Total Sell Quantity",
+      field: "total_sell_quantity",
+      width: 300
+    },
+    {
+      headerName: "Total Buy Price",
+      field: "total_buy_price",
+      width: 300,
+      valueFormatter: this.tradeService.currencyFormatter,
+    },
+    {
+      headerName: "Total Sell Price",
+      field: "total_sell_price",
+      width: 300,
+      valueFormatter: this.tradeService.currencyFormatter,
+    },
+    {
+      headerName: "Profit/Loss %",
+      field: "profit_percentage",
+      width: 300,
+      valueFormatter: this.tradeService.percentFormatter,
+    },
+    {
+      headerName: "R-Multiple",
+      field: "r_multiple",
+      width: 300,
+      valueFormatter: this.tradeService.numberFormatter,
+    },
+    {
+      headerName: "Holding time",
+      field: "holding_time",
+      width: 300,
+      valueFormatter: this.tradeService.holdingTimeFormatter,
+    },
+    {
+      headerName: "Opened Date",
+      field: "timestamp",
+      width: 300,
+      valueFormatter: this.tradeService.dateFormatter
+    },
+    {
+      headerName: "Opened Time",
+      field: "timestamp",
+      width: 300,
+      valueFormatter: this.tradeService.timeFormatter,
+    },
+    {
+      headerName: "Position",
+      field: "position",
+      width: 300
+    },
+  ];
 
-  constructor(private router: Router, protected tradeService: TradeService) {
-    this.tradelogGridOptions = {
-      onRowClicked: this.onRowClicked.bind(this)
-    };
+
+  constructor(protected tradeService: TradeService) {
   }
 
   ngOnInit(): void {
-
-
-  }
-
-  getOpenTradesOnAccountChange() {
-
-  }
-
-  onRowClicked(event: any): void {
-    let rowData: any;
-    rowData = event.data;
-    this.router.navigate(['individualTrade'], { queryParams: rowData });
-  }
-
-  onTradelogGridReady(params: any) {
-    this.tradelogGridParam = params;
-    this.tradelogGridApi = params.api;
-    this.tradelogGridColumnApi = params.columnApi;
-    this.tradelogGridApi.sizeColumnsToFit();
-  }
-
-  dateFormatter(params: any) {
-    return new DateFormatPipe().transform(params.value, 'dd MMM yyyy');
-  }
-
-  timeFormatter(params: any) {
-    return new DateFormatPipe().transform(params.value, 'hh:mm:ss');
-  }
-
-  holdingTimeFormatter(params: any) {
-    return new HoldingTimePipe().transform(params.value);
-  }
-
-  currencyFormatter(params: any) {
-    return new CurrencyPipe().transform(params.value, 'INR');
-  }
-
-  percentFormatter(params: any) {
-    return new RoundPipe().transform(params.value, true);
-  }
-
-  numberFormatter(params: any) {
-    return new RoundPipe().transform(params.value);
   }
 
   selectTradeType(tradeType: 'closed' | 'open'): void {

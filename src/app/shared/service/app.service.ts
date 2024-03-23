@@ -21,14 +21,12 @@ export class AppService {
         return this.http.get<any>(url);
     }
 
-    getAllOpenTrades(accountID: string | null): Observable<any> {
-        const url = accountID ? `${this.appServiceBaseURL}/trades/open/${accountID}` : `${this.appServiceBaseURL}/trades/open`;
-        return this.http.get<any>(url);
+    getAllClosedTrades(accountID: string | null): Observable<any> {
+        return this.http.get<any>(`${this.appServiceBaseURL}/trades/closed?accountId=${accountID}`);
     }
 
-    getAllClosedTrades(accountID: string | null): Observable<any> {
-        const url = accountID ? `${this.appServiceBaseURL}/trades/closed/${accountID}` : `${this.appServiceBaseURL}/trades/closed`;
-        return this.http.get<any>(url);
+    getAllOpenTrades(accountID: string | null): Observable<any> {
+        return this.http.get<any>(`${this.appServiceBaseURL}/trades/open?accountId=${accountID}`);
     }
 
     getAllTransactionForThisTrade(tradeId: string, tradeType: string): Observable<any> {
